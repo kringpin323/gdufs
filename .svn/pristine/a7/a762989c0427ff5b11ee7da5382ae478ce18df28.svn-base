@@ -1,0 +1,27 @@
+package com.fro.utils;
+
+import java.util.List;
+
+import com.fro.entity.DeviceInfo;
+import com.fro.order.GuardControl;
+import com.fro.service.LabService;
+import com.fro.service.impl.LabServiceImpl;
+
+public class GetCuardControl {
+
+	
+	public GetCuardControl() {
+		
+	}
+	
+	
+	public static  GuardControl getGuardControl(){
+		
+		LabService lab=new LabServiceImpl();
+		List<DeviceInfo> deviceInfo=lab.getDeviceInfo("це╫С");
+		DeviceInfo door=deviceInfo.get(0);
+		GuardControl doorC=new GuardControl(door.getDeviceIp(),door.getPort());
+		
+		return doorC;
+	}
+}

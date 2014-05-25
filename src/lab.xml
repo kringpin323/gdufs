@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+		<package name="third" extends="first">
+		<action name="lab_*" class="com.fro.action.LabAction" method="{1}">
+		<result name="lightControl">/WEB-INF/jsp/lightControl.jsp</result>
+		<result name="switchControl">/WEB-INF/jsp/switchControl.jsp</result>
+		<result name="airConditioner">/WEB-INF/jsp/airConditioner.jsp</result>
+		<result name="doorContorl">/WEB-INF/jsp/doorContorl.jsp</result>
+		<result name="safeControl">/WEB-INF/jsp/safeContorl.jsp</result>
+		<result name="spControl">/WEB-INF/jsp/spControl.jsp</result>
+		<result name="toLabManager">/WEB-INF/jsp/labManager.jsp</result>
+		<result name="preview">/WEB-INF/jsp/labInfoList.jsp</result>
+		<result name="lightList">/WEB-INF/jsp/lightList.jsp</result>
+		<result name="safeList">/WEB-INF/jsp/safeList.jsp</result>
+		<result name="doorList">/WEB-INF/jsp/doorList.jsp</result>
+		<result name="waite">/WEB-INF/news/MyJsp.jsp</result>
+		<result name="noRight">/WEB-INF/jsp/noRight.jsp</result>
+		<result name="toSafeDoor">/WEB-INF/jsp/safeDoorContorl.jsp</result>
+		<result name="doorList2">/WEB-INF/jsp/safeDoorList.jsp</result>
+		<result name="alarmLists">/WEB-INF/jsp/BaoJList.jsp</result>
+		<result name="toUpdDoorPwd">/WEB-INF/jsp/updDoorPwd.jsp</result>
+		</action>
+			
+			
+		</package>
+
+		
+</struts>    

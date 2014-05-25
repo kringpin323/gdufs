@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="gdufs"
+  id="myeclipse.1362723457171"
+  context-root="/gdufs"
+  j2ee-spec="5.0"
+  archive="gdufs.war">
+  <attributes>
+    <attribute name="webrootdir" value="/WebRoot" />
+  </attributes>
+</project-module>
+

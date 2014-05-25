@@ -1,0 +1,51 @@
+package com.fro.socket;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.UnknownHostException;
+
+public class SocketOperates {
+	Socket  client=null;
+	InetAddress addremote=null;
+	SocketAddress remoteAddr=null;
+	public SocketOperates(){
+		client=new Socket();
+	}
+	public void  getConnect(String addr,int port,int timeout){//socket通信连接，其中addr是IP地址，port是端口号，timeout是连接超时时间
+		//只要知道步骤就可以了
+		client=new Socket();
+		 try {
+				addremote=InetAddress.getByName(addr);
+			} catch (UnknownHostException e) {
+			}
+			remoteAddr=new InetSocketAddress(addremote,port);
+			try {
+				client.connect(remoteAddr,timeout);
+			    
+			} catch (IOException e) {
+			}
+	}
+	
+	public Socket getClient() {//返回socket 
+		return client;
+	}
+	public void setClient(Socket client) {
+		this.client = client;
+	}
+	
+	public void closeSock(){
+		try {
+			client.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void main(String a[]) throws IOException{//这里很多都是测试用的
+
+         
+
+	}
+}

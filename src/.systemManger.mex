@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="sencod" location="200,50" size="170,260">
+    <action name="systemManger_*" location="10,20" size="150,230">
+      <result name="toLabStauSet">
+        <resourceEdge source="toLabStauSet" routing="0" target="labStauSet.jsp" />
+      </result>
+      <result name="toUserInfo">
+        <resourceEdge source="toUserInfo" routing="0" target="userInfo.jsp" />
+      </result>
+      <result name="toLabRecode">
+        <resourceEdge source="toLabRecode" routing="0" target="labRecode.jsp" />
+      </result>
+      <result name="toImportUserInfo">
+        <resourceEdge source="toImportUserInfo" routing="0" target="importUserInfo.jsp" />
+      </result>
+      <result name="importUserInfo" />
+      <result name="toAutoSet">
+        <resourceEdge source="toAutoSet" routing="0" target="autoSet.jsp" />
+      </result>
+      <result name="toRightSet">
+        <resourceEdge source="toRightSet" routing="0" target="toRightSet.jsp" />
+      </result>
+      <result name="toGroupRightSet">
+        <resourceEdge source="toGroupRightSet" routing="0" target="toGroupRightSet.jsp" />
+      </result>
+      <result name="RightSet" />
+      <result name="findByCondition">
+        <resourceEdge source="findByCondition" routing="0" target="findByCon.jsp" />
+      </result>
+      <result name="UserGroup">
+        <resourceEdge source="UserGroup" routing="0" target="userGroupManager.jsp" />
+      </result>
+      <result name="RightSet2" />
+      <result name="preview">
+        <resourceEdge source="preview" routing="0" target="groupInfoList.jsp" />
+      </result>
+      <result name="groupUserList">
+        <resourceEdge source="groupUserList" routing="0" target="groupList.jsp" />
+      </result>
+      <result name="toModiyGroup">
+        <resourceEdge source="toModiyGroup" routing="0" target="toModiyGroup.jsp" />
+      </result>
+      <result name="exception">
+        <resourceEdge source="exception" routing="0" target="error.jsp" />
+      </result>
+    </action>
+  </package>
+  <webResource name="main.jsp" path="/WEB-INF/login/main.jsp" location="500,30" size="150,55" />
+  <webResource name="login.jsp" path="/login.jsp" location="10,30" size="150,55" />
+  <webResource name="OutSystem.jsp" path="/WEB-INF/jsp/OutSystem.jsp" location="491,205" size="150,55" />
+  <webResource name="labStauSet.jsp" path="/WEB-INF/jsp/labStauSet.jsp" location="200,200" size="150,55" />
+  <webResource name="userInfo.jsp" path="/WEB-INF/jsp/userInfo.jsp" location="50,350" size="150,55" />
+  <webResource name="labRecode.jsp" path="/WEB-INF/jsp/labRecode.jsp" location="350,350" size="150,55" />
+  <webResource name="importUserInfo.jsp" path="/WEB-INF/jsp/importUserInfo.jsp" location="50,500" size="150,55" />
+  <webResource name="autoSet.jsp" path="/WEB-INF/jsp/autoSet.jsp" location="350,500" size="150,55" />
+  <webResource name="toRightSet.jsp" path="/WEB-INF/jsp/toRightSet.jsp" location="50,650" size="150,55" />
+  <webResource name="findByCon.jsp" path="/WEB-INF/jsp/findByCon.jsp" location="350,650" size="150,55" />
+  <webResource name="error.jsp" path="/error.jsp" location="0,0" size="0,0" />
+  <webResource name="userGroupManager.jsp" path="/WEB-INF/jsp/userGroupManager.jsp" location="0,0" size="0,0" />
+  <webResource name="groupInfoList.jsp" path="/WEB-INF/jsp/groupInfoList.jsp" location="0,0" size="0,0" />
+  <webResource name="toGroupRightSet.jsp" path="/WEB-INF/jsp/toGroupRightSet.jsp" location="0,0" size="0,0" />
+  <webResource name="groupList.jsp" path="/WEB-INF/jsp/groupList.jsp" location="0,0" size="0,0" />
+  <webResource name="toModiyGroup.jsp" path="/WEB-INF/jsp/toModiyGroup.jsp" location="0,0" size="0,0" />
+</Struts2Diagram>
+

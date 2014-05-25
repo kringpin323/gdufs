@@ -1,0 +1,1059 @@
+package com.fro.dao.impl;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+
+import com.fro.dao.LoginDao;
+import com.fro.entity.ClassInfo;
+import com.fro.entity.ClassSchedule;
+import com.fro.entity.ClasshourInfo;
+import com.fro.entity.DepartmentInfo;
+import com.fro.entity.DeviceInfo;
+import com.fro.entity.GroupInfo;
+import com.fro.entity.LabInfo;
+import com.fro.entity.LabRight;
+import com.fro.entity.LabRightId;
+import com.fro.entity.MajorInfo;
+import com.fro.entity.SessionParameter;
+import com.fro.entity.UserGroup;
+import com.fro.entity.UserInfo;
+import com.fro.entity.UserRight;
+import com.fro.exception.ForeginSchooleException;
+import com.fro.utils.HibernateUtils;
+
+public class LoginDaoImpl implements LoginDao {
+
+	public UserInfo findByUserId(String userId) {
+		String hql="from UserInfo where UserID=? and Status=?";
+		Session session=HibernateUtils.getSession();
+		List<UserInfo> userInfo=(List<UserInfo>)session.createQuery(hql).setString(0, userId).setString(1, "1").list();
+		HibernateUtils.close();
+		if(userInfo.size()==0){
+			return null;
+		}else{
+		return userInfo.get(0) ;
+		}
+	}
+
+	public UserGroup findGroupid(String userid){
+	
+			Session session = HibernateUtils.getSession();
+			String hql = "select u from UserGroup u where UserID= ?";
+			Query query = session.createQuery(hql);
+			query.setString(0, userid);
+			List<UserGroup> userGroups = query.list();
+			HibernateUtils.close();
+
+			return userGroups.get(0);
+		
+		
+	}
+
+	public UserRight findByGroupid(String groupid) {
+		
+		Session session = HibernateUtils.getSession();
+		String hql = "select u from UserRight u where GroupID= ?";
+		Query query = session.createQuery(hql);
+		query.setString(0, groupid);
+		List<UserRight> userRights = query.list();
+		HibernateUtils.close();
+		
+		return userRights.get(0);
+	}
+
+
+	public void setLabStau(String userid,String logmodel) {
+		Session session = HibernateUtils.getSession();
+		String hql="update UserInfo set LogMode=? where UserID=?";
+		Query query = session.createQuery(hql);
+		query.setString(0, logmodel).setString(1, userid).executeUpdate();
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+	}
+
+	public void addUserInfo(UserInfo userInfo)throws Exception{
+	
+				try {
+					Session session=HibernateUtils.getSession();
+					session.save(userInfo);
+					session.beginTransaction().commit();
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new ForeginSchooleException("数据层异常!");
+				}finally{
+					HibernateUtils.close();
+				}
+				
+		
+		}
+
+	public List<DepartmentInfo> getDepartment() {
+	 List<DepartmentInfo> departmentInfos= new ArrayList<DepartmentInfo>();
+
+		String hql=" from DepartmentInfo";
+		Session session = HibernateUtils.getSession();
+		Query query = session.createQuery(hql);
+		departmentInfos = query.list();
+		HibernateUtils.close();
+			
+		return departmentInfos;
+	}
+
+	public List<GroupInfo> getRight() {
+		List<GroupInfo> rights=new ArrayList<GroupInfo>();
+		String hql=" from GroupInfo";
+		Session session =HibernateUtils.getSession();
+		Query query=session.createQuery(hql);
+		rights=query.list();
+		HibernateUtils.close();
+		return rights;
+	}
+
+	public List<MajorInfo> getMajor() {
+		List<MajorInfo> majors=new ArrayList<MajorInfo>();
+		String hql="from MajorInfo";
+		
+		Session session =HibernateUtils.getSession();
+		Query query=session.createQuery(hql);
+		majors=query.list();
+		HibernateUtils.close();
+		
+		return majors;
+	}
+
+	public List<UserInfo> findByCondition(String hql,int currentPage,int pageSize) {
+		
+		List<UserInfo> userInfos=new ArrayList<UserInfo>();
+		
+		Session session =HibernateUtils.getSession();
+		Query query=session.createQuery(hql).setFirstResult((currentPage-1)*pageSize).setMaxResults(pageSize);
+		userInfos=query.list();
+		HibernateUtils.close();
+		
+		return userInfos;
+	}
+
+	public int getTotalPage(String hql,int pageSize) {
+		
+		Session session =HibernateUtils.getSession();
+		List<Long> recodes=session.createQuery(hql).list();
+		
+		int rec=recodes.get(0).intValue();
+		
+	int totalPage=rec%pageSize==0?rec/pageSize:rec/pageSize+1;
+		HibernateUtils.close();
+		return totalPage;
+	}
+
+	public int getRecodes(String hql) {
+		Session session =HibernateUtils.getSession();
+		List<Long> recodes=session.createQuery(hql).list();
+		int rec=recodes.get(0).intValue();
+		HibernateUtils.close();
+		return rec;
+	}
+
+	public int deleteByUserId(String userId) {
+		String hql="delete from UserInfo where UserId=?";
+		
+		Session session=HibernateUtils.getSession();
+		int row=session.createQuery(hql).setString(0, userId).executeUpdate();
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+		return row;
+	}
+
+	public List<LabInfo> getLabInfo() {
+		String hql="from LabInfo";
+		Session session=HibernateUtils.getSession();
+		List<LabInfo> labInfos=(List<LabInfo>) session.createQuery(hql).list();
+		HibernateUtils.close();
+			
+			
+		return labInfos;
+	}
+	
+	
+
+	/**
+	 *  2 二期修改 根据用户ID  查找有实验室权限的的实验室信息
+	 */
+	
+	public List<LabInfo> getLabInfosRight(String userId) {
+		List<LabInfo> labInfos=new ArrayList<LabInfo>();
+
+		Session session=HibernateUtils.getSession();
+
+		Connection conn = session.connection(); 
+        //创建调用存储过程的预定义SQL语句 
+    
+    
+                //创建过程执行器 
+                CallableStatement cstmt;
+				try {
+					cstmt = conn.prepareCall(" exec upd_GetLabRight '"+userId+"'");
+					 ResultSet rs= cstmt.executeQuery();
+					 while(rs.next()){
+						 LabInfo l=new LabInfo();
+						 l.setLabId(rs.getString("LabID"));
+						 l.setLabDesc(rs.getString("LabDesc"));
+						 labInfos.add(l);
+					 }
+					 
+					 
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} 
+                //设置入参和出参 
+		HibernateUtils.close();
+		return labInfos;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public List<ClasshourInfo> getClasshourinfo(){
+		
+		Session session=HibernateUtils.getSession();
+		String hql="from ClasshourInfo";
+		List<ClasshourInfo> ccc=(List<ClasshourInfo>) session.createQuery(hql).list();
+		HibernateUtils.close();	
+		return ccc;
+	}
+	public List<DeviceInfo> getDeviceInfo(){
+		String hql="from DeviceInfo";
+		Session session=HibernateUtils.getSession();
+		List<DeviceInfo> deviceInfos=(List<DeviceInfo>) session.createQuery(hql).list();
+		HibernateUtils.close();	
+		return deviceInfos;
+	}
+	
+	public void delete(int deviceId)
+	{
+		Session session=HibernateUtils.getSession();
+		String hql = "from DeviceInfo d where d.deviceId="+deviceId;
+		DeviceInfo deviceInfo =(DeviceInfo)session.createQuery(hql).list().get(0);
+		session.delete(deviceInfo);
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+	}
+	public DeviceInfo Delete(int deviceId)
+	{
+		Session session=HibernateUtils.getSession();
+		String hql = "from DeviceInfo d where d.deviceId="+deviceId;
+		DeviceInfo deviceInfo =(DeviceInfo)session.createQuery(hql).list().get(0);
+		
+		HibernateUtils.close();
+		return deviceInfo;
+	}
+	public void update(Object obj)
+	{
+		Session session=HibernateUtils.getSession();
+		session.update(obj);
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+	}
+	
+	public void addClassSchedule(ClassSchedule classSchedule) {
+		
+		Session session=HibernateUtils.getSession();
+		session.save(classSchedule);
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+	
+		}
+	public void addDeviceInfo(DeviceInfo deviceInfo) {
+		
+		Session session=HibernateUtils.getSession();
+		session.save(deviceInfo);
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+	
+		}
+	public void addSessionParameter(SessionParameter sessionParameter) {
+		
+		Session session=HibernateUtils.getSession();
+		session.save(sessionParameter);
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+	
+		}
+
+public List<UserInfo> findAll() {
+		
+		String hql="from UserInfo";
+		Session session=HibernateUtils.getSession();
+		List<UserInfo> us=(List<UserInfo>)session.createQuery(hql).list();
+		HibernateUtils.close();
+		return us;
+	}
+
+	public int addUserInfo(List<UserInfo> userInfos) {
+		int row=0;
+		Session session=HibernateUtils.getSession();
+		session.clear();
+		try {
+			for (UserInfo userInfo : userInfos) {
+				
+				session.save(userInfo);
+				row++;
+			}
+			session.beginTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+			return 0;
+		}finally{
+			HibernateUtils.close();
+		}
+		
+		
+		
+		return row;
+	}
+
+	public int updUserInfo(UserInfo userInfo) {
+		String sql="update user_info set Password=? ,UserName=?,Sex=?,Mobile=?,Department=?,Major=?,Class=?,RFID=?   where  UserID=?";
+		Session session=HibernateUtils.getSession();
+		SQLQuery sq=session.createSQLQuery(sql);
+		sq.setString(0, userInfo.getPassword());
+		sq.setString(1, userInfo.getUserName());
+		sq.setString(2, userInfo.getSex());
+		sq.setString(3, userInfo.getMobile());
+		sq.setString(4, userInfo.getDepartment());
+		sq.setString(5, userInfo.getMajor());
+		sq.setString(6, userInfo.getClass_());
+		sq.setString(7, userInfo.getRfid());
+		sq.setString(8, userInfo.getUserId());
+		
+		int row=sq.executeUpdate();
+		session.beginTransaction().commit();
+		
+		
+		HibernateUtils.close();
+		return row;
+	}
+
+	public List<String> getRightId(String userid) throws Exception {
+	
+		List<String> rightIds=new ArrayList<String>();
+		Session session=HibernateUtils.getSession();
+		Connection conn = session.connection(); 
+        //创建调用存储过程的预定义SQL语句 
+    
+        try { 
+                //创建过程执行器 
+                CallableStatement cstmt = conn.prepareCall("exec dbo.upd_GetUserRight'"+userid+"'"); 
+                //设置入参和出参 
+                
+               ResultSet rs= cstmt.executeQuery(); 
+                //获取输出参数值（两种方式都行） 
+              while(rs.next()){
+            	  rightIds.add(rs.getString(1).trim());
+              }
+                
+        } catch (SQLException e) { 
+                e.printStackTrace(); 
+        } 
+		
+		return rightIds;
+	}
+
+	public void addGroupInfo(String userId, String groupId) {
+String sql="insert into user_group(GroupID,UserID) values('"+groupId+"','"+userId+"')";
+		Session session=HibernateUtils.getSession();
+		session.createSQLQuery(sql).executeUpdate();
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+	}
+
+	public List<UserInfo> getUserInfos() {
+		String hql="from UserInfo";
+		Session session=HibernateUtils.getSession();
+		List<UserInfo> userInfos=session.createQuery(hql).list();
+		return userInfos;
+	}
+
+
+	public void addUserRight(String userId, List<String> ad) {
+		Session session=HibernateUtils.getSession();
+		try {
+		for (String a : ad) {
+			UserRight ur=new UserRight();
+			ur.setRightId(a);
+			ur.setGroupId("******");
+			ur.setUserId(userId);
+			session.save(ur);
+		}
+		session.beginTransaction().commit();
+		} catch (Exception e) {
+			session.beginTransaction().rollback();
+		}
+		HibernateUtils.close();
+	}
+
+	public void delUserRight(String userId, List<String> del) {
+		Session session=HibernateUtils.getSession();
+		try {
+		for (String a : del) {
+			session.createSQLQuery("delete from user_right where UserID=? and RightID=?").setString(0, userId).setString(1, a).executeUpdate();
+		}
+		session.beginTransaction().commit();
+		} catch (Exception e) {
+			session.beginTransaction().rollback();
+		}
+		HibernateUtils.close();
+		
+	}
+
+	public int stopByUserId(String userId) {
+		String hql="update UserInfo set Status=? where UserID=?";
+		Session session=HibernateUtils.getSession();
+		session.createQuery(hql).setString(0, "2").setString(1, userId).executeUpdate();
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+		return 0;
+	}
+
+	public void deleteGroupByUserId(String string) {
+		String hql="delete from UserGroup where UserID=?";
+		Session session=HibernateUtils.getSession();
+		session.createQuery(hql).setString(0, string).executeUpdate();
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+		
+	}
+
+	public void deleteUserRight(String string) {
+		String hql="delete from UserRight where UserID=?";
+		Session session=HibernateUtils.getSession();
+		session.createQuery(hql).setString(0, string).executeUpdate();
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+		
+	}
+
+
+	/***
+	 * 
+	 * 陈波
+	 * 
+	 * 
+	 */
+	public int canshumohuchaxun(int id){
+		String hql="select count(*) from SessionParameter";
+		Session session=HibernateUtils.getSession();
+		if(id==0)
+		{
+			hql = hql;
+		}else
+		{
+			hql = hql+" s where s.deviceId="+id;
+		}
+		List<Long> sList=session.createQuery(hql).list();
+		HibernateUtils.close();	
+		return sList.get(0).intValue();
+	}
+	//分页显示传感器参数列表
+	public List<SessionParameter> canshumohuchaxun(int id,int page){
+		String hql="from SessionParameter";
+		System.out.println(page);
+		Session session=HibernateUtils.getSession();
+		if(id==0)
+		{
+			hql = hql;
+		}else
+		{
+			hql = hql+" s where s.deviceId="+id;
+			
+		}
+		List<SessionParameter> sssList=(List<SessionParameter>) session.createQuery(hql).setFirstResult((page-1)*10).setMaxResults(10).list();
+		HibernateUtils.close();	
+		return sssList;
+	}
+	public void deletecan(int deviceId,String name)
+	{
+		Session session=HibernateUtils.getSession();
+		String hql = "delete from SessionParameter  where sessionValue='"+name+"' and DeviceID="+deviceId;
+		session.createQuery(hql).executeUpdate();
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+	}
+	public SessionParameter CaninsertSelect(int id,String name)
+	{
+		Session session=HibernateUtils.getSession();
+		String hql = "from SessionParameter s where s.sessionValue='"+name+"' and s.deviceId="+id;
+		SessionParameter sessionParameter =(SessionParameter)session.createQuery(hql).list().get(0);		
+		HibernateUtils.close();
+		return sessionParameter;
+	}
+	public void Update(Object obj)
+	{
+		Session session=HibernateUtils.getSession();
+		String hql="update SessionParameter set DeviceID=?,SessionName=?,SessionType=?,LabID=?,Position=?,Status=?,CreateDate=?,CreateBy=? where SessionValue=  where UserID=?";
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+	}
+	public List<DeviceInfo> Mohuchaxun(String name,String id,int page){
+		String hql="from DeviceInfo";
+		Session session=HibernateUtils.getSession();
+		if("".equals(name)&&"".equals(id))
+		{
+			hql="from DeviceInfo";
+			
+		}else
+		 if(!"".equals(name)&&"".equals(id))
+		{
+			hql=hql+" d where d.deviceName='"+name+"'";
+		}else
+		 if("".equals(name)&&!"".equals(id))
+		{
+			hql=hql+" d where d.labId='"+id+"'";
+		}else
+		 if(!"".equals(name)&&!"".equals(id)){
+			hql=hql+" d where d.deviceName='"+name+"' and d.labId='"+id+"'";
+		}
+		 
+		List<DeviceInfo> deviceInfos=(List<DeviceInfo>) session.createQuery(hql).setFirstResult((page-1)*10).setMaxResults(10).list();
+		HibernateUtils.close();	
+		return deviceInfos;
+	}
+	public int Recoder(String name,String id)
+	{
+		String hql="select count(*) from DeviceInfo";
+		Session session=HibernateUtils.getSession();
+		System.out.println(name);
+		System.out.println(id);
+		if("".equals(name)&&"".equals(id))
+		{
+			hql="select count(*) from DeviceInfo";
+			
+		}else
+		 if(!"".equals(name)&&"".equals(id))
+		{
+			hql=hql+" d where d.deviceName='"+name+"'";
+		}else
+		 if("".equals(name)&&!"".equals(id))
+		{
+			hql=hql+" d where d.labId='"+id+"'";
+		}else
+		 if(!"".equals(name)&&!"".equals(id)){
+			hql=hql+" d where d.deviceName='"+name+"' and d.labId='"+id+"'";
+		}
+		 
+		List<Long> recodes=session.createQuery(hql).list();
+		int recode=recodes.get(0).intValue();
+		HibernateUtils.close();	
+		return recode;
+	}
+	public List<SessionParameter> deleteselect(int deviceId)
+	{
+		Session session=HibernateUtils.getSession();
+		String hql= "from SessionParameter where DeviceID="+deviceId;
+		List<SessionParameter> ssssList = session.createQuery(hql).list();
+		return ssssList;
+	}
+	public DeviceInfo updateSelect(int deviceId)
+	{
+		Session session=HibernateUtils.getSession();
+		String hql = "from DeviceInfo d where d.deviceId="+deviceId;
+		DeviceInfo deviceInfo =(DeviceInfo)session.createQuery(hql).list().get(0);
+		HibernateUtils.close();
+		return deviceInfo;
+	}
+
+	public List<ClassInfo> getClaByMajor(String major) {
+		
+		Session session=HibernateUtils.getSession();
+		String hql = "from ClassInfo where major='"+major+"'";
+		List<ClassInfo> cis=session.createQuery(hql).list();
+		HibernateUtils.close();
+		
+		return cis;
+	}
+
+	public List<ClassSchedule> findByCondition1(String hql, int currentPage,
+			int pageSize) {
+		List<ClassSchedule> css=new ArrayList<ClassSchedule>();
+		Session session =HibernateUtils.getSession();
+		Query query=session.createQuery(hql).setFirstResult((currentPage-1)*pageSize).setMaxResults(pageSize);
+		css=query.list();
+		HibernateUtils.close();
+		return css;
+	}
+
+	public void deleteClassSchedule(int clsTimTbllD) {
+		
+		String hql = "delete from ClassSchedule  where ClsTimTbllD="+clsTimTbllD;
+		Session session=HibernateUtils.getSession();
+		session.createQuery(hql).executeUpdate();
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+	}
+
+	public void addClasshourInfo(ClasshourInfo chi) {
+		Session session=HibernateUtils.getSession();
+		session.save(chi);
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+		
+	}
+
+	public List<UserGroup> getAdminUserInfo(String string) {
+		List<UserGroup> userIds=new ArrayList<UserGroup>();
+		
+		Session session=HibernateUtils.getSession();
+	userIds=session.createQuery("from UserGroup where GroupID='"+string+"'").list();
+	session.beginTransaction().commit();
+	HibernateUtils.close();
+		return userIds;
+	}
+
+	public void addUserGroup(GroupInfo groupInfo) {
+		Session session=HibernateUtils.getSession();
+		session.save(groupInfo);
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+	}
+
+	public List<GroupInfo> getGroupInfos() {
+		List<GroupInfo> groupInfos=new ArrayList<GroupInfo>();
+		Session session=HibernateUtils.getSession();
+		groupInfos=session.createQuery("from GroupInfo").list();
+		HibernateUtils.close();
+		return groupInfos;
+	}
+
+	public void modifyGroupInfo(GroupInfo groupInfo) {
+		Session session=HibernateUtils.getSession();
+		String hql="update GroupInfo set GroupName=? where GroupID=?";
+		session.createQuery(hql).setString(0, groupInfo.getGroupName()).setString(1, groupInfo.getGroupId()).executeUpdate();
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+		
+	}
+
+	public void deleteGroupInfo(String string) {
+		String hql="delete from GroupInfo where GroupID='"+string+"'";
+		Session session=HibernateUtils.getSession();
+		session.createQuery(hql).executeUpdate();
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+		
+	}
+
+	public List<UserRight> getUserRight(String groupId) {
+		
+		List<UserRight>  urs=new ArrayList<UserRight> ();
+		Session session=HibernateUtils.getSession();
+		urs=session.createQuery("from UserRight where GroupID=?").setString(0, groupId).list();
+		HibernateUtils.close();
+		
+		return urs;
+	}
+
+	public void addUserRight2(String groupId, List<String> ad) {
+		Session session=HibernateUtils.getSession();
+		try {
+		for (String a : ad) {
+			UserRight ur=new UserRight();
+			ur.setRightId(a);
+			ur.setGroupId(groupId);
+			ur.setUserId("******");
+			session.save(ur);
+		}
+		session.beginTransaction().commit();
+		} catch (Exception e) {
+			session.beginTransaction().rollback();
+		}
+		HibernateUtils.close();
+		
+	}
+
+	public void delUserRight2(String groupId, List<String> del) {
+		Session session=HibernateUtils.getSession();
+		try {
+		for (String a : del) {
+			session.createSQLQuery("delete from user_right where GroupID=? and RightID=?").setString(0, groupId).setString(1, a).executeUpdate();
+		}
+		session.beginTransaction().commit();
+		} catch (Exception e) {
+			session.beginTransaction().rollback();
+		}
+		HibernateUtils.close();
+		
+	}
+
+	public void deleteUserRight2(String trim) {
+		String hql="delete from UserRight where GroupID=?";
+		Session session=HibernateUtils.getSession();
+		session.createQuery(hql).setString(0, trim).executeUpdate();
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+		
+	}
+
+	public List<UserGroup> getUserGrops(String trim) {
+		 List<UserGroup> ugs=new ArrayList<UserGroup>();
+		String hql="from UserGroup where GroupID=?";
+		Session session=HibernateUtils.getSession();
+	ugs=session.createQuery(hql).setString(0, trim).list();
+
+		HibernateUtils.close();
+		
+		return ugs;
+	}
+
+	public List<Object[]> getUserInfosByGroupId(String groupId) {
+		String sql="select a.GroupID,b.GroupName,c.UserID,c.UserName FROM user_group AS a INNER JOIN group_info as b ON a.GroupID = b.GroupID INNER JOIN user_info AS c ON a.UserID = c.UserID WHERE a.GroupID ='"+groupId.trim()+"'";
+		Session session = HibernateUtils.getSession();
+		List<Object[]> emps = new ArrayList<Object[]>();
+		
+		Connection conn = session.connection(); 
+        //创建调用存储过程的预定义SQL语句 
+    
+    
+                //创建过程执行器 
+                CallableStatement cstmt;
+				try {
+					cstmt = conn.prepareCall(sql);
+					 ResultSet rs= cstmt.executeQuery();
+					 while(rs.next()){
+						 Object[] o=new Object[4];
+						 o[0]=rs.getObject("GroupID");
+						 o[1]=rs.getObject("GroupName");
+						 o[2]=rs.getObject("UserID");
+						 o[3]=rs.getObject("UserName");
+						 emps.add(o);
+					 }
+					 
+					 
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} 
+                //设置入参和出参 
+                
+              
+
+		
+               HibernateUtils.close();
+
+        
+		
+		return emps;
+	}
+
+	public void deleteGroupInfo(String trim, String groupId) {
+		
+		String sql="delete from user_group where GroupID='"+groupId+"'and UserID='"+trim+"'";
+			Session session=HibernateUtils.getSession();
+			session.createSQLQuery(sql).executeUpdate();
+			session.beginTransaction().commit();
+			HibernateUtils.close();
+	}
+
+	public String getStauSet() {
+		String groupId="labAdmin";
+		String sql="select c.LogMode FROM user_group AS a INNER JOIN group_info as b ON a.GroupID = b.GroupID INNER JOIN user_info AS c ON a.UserID = c.UserID WHERE a.GroupID ='"+groupId.trim()+"'";
+		Session session = HibernateUtils.getSession();
+		List<Object[]> emps = new ArrayList<Object[]>();
+		
+		Connection conn = session.connection(); 
+        //创建调用存储过程的预定义SQL语句 
+    
+    
+                //创建过程执行器 
+                CallableStatement cstmt;
+				try {
+					cstmt = conn.prepareCall(sql);
+					 ResultSet rs= cstmt.executeQuery();
+					 while(rs.next()){
+						String str=rs.getString("LogMode");
+						return str;
+					 }
+					 
+					 
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} 
+                //设置入参和出参 
+                
+              
+
+		
+               HibernateUtils.close();
+		
+		
+		return null;
+	}
+
+	public List<List<String>> getAlarmList(int deviceId,String sessionN,String alarmTime,String alarmTimeEnd,int pageSize,int currentPage) throws Exception {
+
+		StringBuffer sql=new StringBuffer("select * from (select row_number() OVER (ORDER BY b.RecordID ASC) AS RowID, b.*,c.SessionName from session_log b inner join session_parameter c on  c.SESSIONVALUE = b.SESSIONVALUE and c.DeviceID = b.DeviceID where b.DeviceID = "+deviceId);
+		if(!"".equals(sessionN)){
+		sql.append("  and c.SessionName='"+sessionN+"'");
+		}
+		if(!"".equals(alarmTime)&&(!"".equals(alarmTimeEnd))){
+			sql.append("  and CONVERT(varchar(100), b.OperateTime, 20) between '"+alarmTime+"' and '"+alarmTimeEnd+"'");	
+		}
+		
+		sql.append(" ) a  where a.Rowid >"+(currentPage-1)*pageSize+" and a.Rowid<= "+(currentPage)*pageSize+"  order by a.OperateTime desc");
+		System.out.println(sql.toString());
+		Session session = HibernateUtils.getSession();
+		List<List<String>> alarmLists = new ArrayList<List<String>>();
+		
+		Connection conn = session.connection(); 
+        //创建调用存储过程的预定义SQL语句 
+    
+    
+                //创建过程执行器 
+                CallableStatement cstmt;
+				try {
+					cstmt = conn.prepareCall(sql.toString());
+					 ResultSet rs= cstmt.executeQuery();
+					 while(rs.next()){
+						 List<String> alarmList=new ArrayList<String>();
+						 alarmList.add(rs.getString("SessionName"));
+						 alarmList.add(rs.getString("DeviceID"));
+						 alarmList.add(rs.getString("SessionValue"));
+						 alarmList.add(rs.getString("OperateTime"));
+						alarmLists.add(alarmList);
+					 }
+					 
+					 
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} 
+                //设置入参和出参 
+                
+              
+
+		
+               HibernateUtils.close();
+		
+		
+		return alarmLists;
+	}
+
+	public int getRecodes(int deviceId, String sessionN, String alarmTime,
+			String alarmTimeEnd) {
+		
+		StringBuffer sql=new StringBuffer("select count(*) from dbo.session_parameter a ,dbo.session_log b WHERE a.DeviceID = b.DeviceID AND a.SESSIONVALUE = b.SESSIONVALUE AND a.DeviceID="+deviceId);
+		if(!"".equals(sessionN)){
+		sql.append("  and a.SessionName='"+sessionN+"'");
+		}
+		if(!"".equals(alarmTime)&&(!"".equals(alarmTimeEnd))){
+			sql.append("  and CONVERT(varchar(100), b.OperateTime, 20) between '"+alarmTime+"' and '"+alarmTimeEnd+"'");	
+		}
+		
+		
+		Session session = HibernateUtils.getSession();
+		int recoders=0;
+		
+		Connection conn = session.connection(); 
+        //创建调用存储过程的预定义SQL语句 
+    
+    
+                //创建过程执行器 
+                CallableStatement cstmt;
+				try {
+					cstmt = conn.prepareCall(sql.toString());
+					 ResultSet rs= cstmt.executeQuery();
+					 while(rs.next()){
+						 recoders=rs.getInt(1);
+					 }
+					 
+					 
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} 
+                //设置入参和出参 
+                
+              
+
+		
+               HibernateUtils.close();
+		
+		
+		
+		return recoders;
+	}
+
+	public void openByUserId(String userId) {
+		String hql="update UserInfo set Status=? where UserID=?";
+		Session session=HibernateUtils.getSession();
+		session.createQuery(hql).setString(0, "1").setString(1, userId).executeUpdate();
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+		
+	}
+
+	public String getBeginDateByCurseClass(String labId) {
+		Session session=HibernateUtils.getSession();
+		Connection conn=session.connection();
+		CallableStatement cstmt;
+		try {
+			cstmt = conn.prepareCall("exec dbo.upd_GetCurrentClass '"+labId+"'");
+			ResultSet rs= cstmt.executeQuery(); 
+		if(rs.next()){
+			return "notNull";
+		}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		 
+		
+		return "null";
+	}
+
+	public void updLabInfoRun(String sql) {
+		Session session=HibernateUtils.getSession();
+		SQLQuery sq=session.createSQLQuery(sql);
+
+		sq.executeUpdate();
+		session.beginTransaction().commit();
+		
+		
+		HibernateUtils.close();
+		
+	}
+
+	public void labRightSet(LabRight lr) {
+		Session session=HibernateUtils.getSession();
+		
+		String sql="insert into lab_right(LabID,UserID,GroupID) values('"+lr.getId().getLabId()+"','"+lr.getId().getUserId()+"','"+lr.getId().getGroupId()+"')";
+		session.createSQLQuery(sql).executeUpdate();
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+		
+	}
+
+	public void deleteRight(String labId) {
+		String hql="delete from lab_right where labId='"+labId+"'";
+		
+		Session session=HibernateUtils.getSession();
+		session.createSQLQuery(hql).executeUpdate();
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+		
+	}
+
+	public List<LabRight> getRightByLabId(String labId) {
+		List<LabRight> lrs=new ArrayList<LabRight>();
+		String sql="select * from lab_right where LabID='"+labId+"'";
+		
+System.out.println(sql);
+		Session session=HibernateUtils.getSession();
+		Connection conn=session.connection();
+		try {
+			PreparedStatement stat=conn.prepareStatement(sql);
+			ResultSet rs=stat.executeQuery();
+			while(rs.next()){
+				LabRight lr=new LabRight();
+				
+				LabRightId id=new LabRightId();
+				id.setGroupId(rs.getString("GroupID"));
+				id.setUserId(rs.getString("UserID"));
+				lr.setId(id);
+				
+				lrs.add(lr);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	
+
+		HibernateUtils.close();
+		return lrs;
+	}
+
+	public List<LabInfo> getDoorNum(String sql) {
+		List<LabInfo> labInfos=new ArrayList<LabInfo>();
+		Session session=HibernateUtils.getSession();
+		Connection conn=session.connection();
+		try {
+			PreparedStatement stat=conn.prepareStatement(sql);
+			ResultSet rs=stat.executeQuery();
+			while(rs.next()){
+				
+				LabInfo lab=new LabInfo();
+					lab.setLabDesc(rs.getString("LabDesc"));
+					lab.setLabId(rs.getString("SessionValue"));
+					labInfos.add(lab);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return labInfos;
+	}
+
+	public int deleteDoorNum(String doorNum, String doorRFID) {
+		Session session=HibernateUtils.getSession();
+		String sql="delete from door_right where RFID='"+doorRFID+"'  and  DoorNum='"+doorNum+"'";
+		int row=session.createSQLQuery(sql).executeUpdate();
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+		return row;
+	}
+
+	public String getDoorNumByRFID(String rfid) {
+		final String sql="select DoorNum from door_right where RFID='"+rfid+"'";
+		Session session=HibernateUtils.getSession();
+		Connection conn=session.connection();
+		try {
+			PreparedStatement stat=conn.prepareStatement(sql);
+			ResultSet rs=stat.executeQuery();
+			while(rs.next()){
+				return rs.getString("DoorNum");
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return "";
+	}
+
+	public int addDoorNum(String doorNum, String doorRFID) {
+		Session session=HibernateUtils.getSession();
+		String sql="insert into door_right values('"+doorRFID+"','"+doorNum+"')";
+		int row=session.createSQLQuery(sql).executeUpdate();
+		session.beginTransaction().commit();
+		HibernateUtils.close();
+		return row;
+		
+	}
+
+
+
+
+
+}
+;

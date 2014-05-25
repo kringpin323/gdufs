@@ -1,0 +1,193 @@
+package  com.fro.utils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fro.entity.DeviceInfo;
+import com.fro.entity.SessionParameter;
+import com.fro.order.GuardControl;
+import com.fro.order.SMPSControl;
+import com.fro.order.SMPSltgkControl;
+import com.fro.order.SecuritySystemControl;
+import com.fro.service.LabService;
+import com.fro.service.impl.LabServiceImpl;
+
+public class LabParameter {
+
+	public String labID;
+	//二期增加属性
+	public String NavigateMode;
+	
+	public String operateTime;
+	
+	public String operate;
+	public List<AutoSocketSendOrder> ass;
+	
+	private List<List<SessionParameter>>  sps;
+	LabService lab=new LabServiceImpl();
+	
+	public void AutoNavigation(){
+		ass = new ArrayList<AutoSocketSendOrder>();
+		SMPSControl smpsc = new SMPSControl();
+		List<byte[]> orderList;
+		List<SessionParameter> sp;
+		AutoSocketSendOrder as;
+		DeviceInfo di;
+		if(operate.equals("OPEN")||operate.equals("CLOSE")){
+			try{
+			sps=lab.getSPs("灯光",labID);
+			orderList=new ArrayList<byte[]>();
+			sp=sps.get(0);
+			di=lab.getByDeviceId(sp.get(0).getSessionParameterPK().getDeviceId());
+			for (SessionParameter sessionParameter : sp) {
+				if(operate.equals("OPEN")){
+					orderList.add(smpsc.onOrder(Integer.parseInt(sessionParameter.getSessionParameterPK().getSessionValue().trim())));
+					
+				}else{
+					orderList.add(smpsc.offOrder(Integer.parseInt(sessionParameter.getSessionParameterPK().getSessionValue().trim())));
+				}
+			}
+		
+			as= new AutoSocketSendOrder(di.getDeviceIp(), di.getPort(), orderList);
+			 ass.add(as);
+			System.out.println(ass.size());
+	
+			}catch(Exception e){e.printStackTrace();}
+			
+			try{
+			sps=lab.getSPs("空调",labID);
+			sp=sps.get(0);
+			di=lab.getByDeviceId(sp.get(0).getSessionParameterPK().getDeviceId());
+			orderList=new ArrayList<byte[]>();
+			for (SessionParameter sessionParameter : sp) {
+				if(operate.equals("OPEN")){
+					orderList.add(smpsc.onOrder(Integer.parseInt(sessionParameter.getSessionParameterPK().getSessionValue().trim())));
+				}else{
+					orderList.add(smpsc.offOrder(Integer.parseInt(sessionParameter.getSessionParameterPK().getSessionValue().trim())));
+				}
+			}
+			as = new AutoSocketSendOrder(di.getDeviceIp(), di.getPort(), orderList);
+			
+			ass.add(as);
+			}catch(Exception e){}
+			
+			try{
+			sps=lab.getSPs("门襟",labID);
+			orderList=new ArrayList<byte[]>();
+			sp=sps.get(0);
+			di=lab.getByDeviceId(sp.get(0).getSessionParameterPK().getDeviceId());
+			ArrayList<byte[]>	orderLists=new ArrayList<byte[]>();
+			for (SessionParameter sessionParameter : sp) {
+				if(labID.equalsIgnoreCase("C507")){
+					if(operate.equals("OPEN")){
+						orderList.add(smpsc.onOrder(7));
+						orderList.add(smpsc.onOrder(8));
+						GuardControl smpsc2 = new GuardControl(di.getDeviceIp(), di.getPort());
+					
+					// 2  二期改动	
+						orderLists.add(smpsc2.emergencyOrder(sessionParameter.getSessionParameterPK().getSessionValue().trim()));
+
+					}else{
+						//并取消第7 8路指示灯
+						orderList.add(smpsc.offOrder(7));
+						orderList.add(smpsc.offOrder(8));
+						//关门时间到了后 取消紧急关门  
+						GuardControl sm = new GuardControl(di.getDeviceIp(), di.getPort());
+					
+						// 2二期改动
+						orderLists.add(sm.cancelEmergencyOrder(sessionParameter.getSessionParameterPK().getSessionValue().trim()));
+						
+					}
+				}else{
+					if(operate.equals("OPEN")){
+						GuardControl smpsc2 = new GuardControl(di.getDeviceIp(), di.getPort());
+					
+					// 2  二期改动	
+						orderLists.add(smpsc2.emergencyOrder(sessionParameter.getSessionParameterPK().getSessionValue().trim()));
+
+					}else{
+						//关门时间到了后 取消紧急关门  
+						GuardControl sm = new GuardControl(di.getDeviceIp(), di.getPort());
+					
+						// 2二期改动
+						orderLists.add(sm.cancelEmergencyOrder(sessionParameter.getSessionParameterPK().getSessionValue().trim()));
+						
+					}
+				}
+			}
+			as=new AutoSocketSendOrder(di.getDeviceIp(), di.getPort(),orderLists);
+			ass.add(as);
+			
+			// 2 二期修改   门襟发送的是灯光IP  获取灯光的IP  与 Port  即可
+			
+			
+			DeviceInfo diM=lab.getByDeviceId(sp.get(0).getSessionParameterPK().getDeviceId());
+			DeviceInfo diD=lab.getByDeviceId("灯光",diM.getLabId());
+			as = new AutoSocketSendOrder(diD.getDeviceIp(), diD.getPort(), orderList);
+			
+			
+			ass.add(as);
+			}catch(Exception e){}
+			
+			try{
+			sps=lab.getSPs("安防",labID);
+			SecuritySystemControl ssc = new SecuritySystemControl();
+			orderList=new ArrayList<byte[]>();
+			sp=sps.get(0);
+			di=lab.getByDeviceId(sp.get(0).getSessionParameterPK().getDeviceId());
+			if(operate.equals("OPEN")){
+				orderList.add(ssc.offOrder());
+			}else{
+				orderList.add(ssc.onOrder());
+			}
+			as = new AutoSocketSendOrder(di.getDeviceIp(), di.getPort(), orderList);
+			ass.add(as);
+			}catch(Exception e){}
+			
+			try{
+			sps=lab.getSPs("继电器",labID);
+			orderList=new ArrayList<byte[]>();
+			SMPSltgkControl smpsltgc = new SMPSltgkControl();
+			sp=sps.get(0);
+			di=lab.getByDeviceId(sp.get(0).getSessionParameterPK().getDeviceId());
+			for (SessionParameter sessionParameter : sp) {
+				if(labID.equalsIgnoreCase("C507")){
+					if(operate.equals("OPEN")){
+						orderList.add(smpsltgc.offOrder(Integer.parseInt(sessionParameter.getSessionParameterPK().getSessionValue().trim())));
+					}else{
+						orderList.add(smpsltgc.onOrder(Integer.parseInt(sessionParameter.getSessionParameterPK().getSessionValue().trim())));
+					}
+					}else{
+					if(operate.equals("OPEN")){
+						orderList.add(smpsc.onOrder(Integer.parseInt(sessionParameter.getSessionParameterPK().getSessionValue().trim())));
+					}else{
+						orderList.add(smpsc.offOrder(Integer.parseInt(sessionParameter.getSessionParameterPK().getSessionValue().trim())));
+					}
+				}
+			}
+			as = new AutoSocketSendOrder(di.getDeviceIp(), di.getPort(), orderList);
+			ass.add(as);
+			}catch(Exception e){}
+			int i = 0;
+			while(i<30){
+				i++;
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+				}
+			for (AutoSocketSendOrder aso : ass) {
+				if(!aso.send_flag){
+					aso.run();
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+					}
+				}
+			}
+			}
+		}else if(operate.equals("CANCEL")){
+			
+		}
+	}
+	
+}

@@ -1,0 +1,142 @@
+package com.fro.utils;
+
+import java.io.File;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+
+import com.fro.entity.ClassSchedule;
+import com.fro.entity.UserInfo;
+
+public class ReadExcel {
+	
+	public static List<UserInfo> readExcel(String path) throws Exception {
+        
+        List<UserInfo> lists = new ArrayList<UserInfo>();
+        List list = new ArrayList();
+     
+            Workbook book = Workbook.getWorkbook(new File(path));
+            // 获得第一个工作表对象
+            Sheet sheet = book.getSheet(0);
+            // 得到第一列第一行的单元格
+            int columnum = sheet.getColumns();// 得到列数
+            int rownum = sheet.getRows();// 得到行数
+           
+            for (int i =1 ; i < rownum; i++)// 循环进行读写
+            {	
+            	List l=new ArrayList();
+                for (int j = 0; j < columnum; j++) {
+                    Cell cell1 = sheet.getCell(j, i);
+                    String result = cell1.getContents();
+                   
+                  l.add(result);
+                }
+                list.add(l);
+                UserInfo u=new UserInfo();
+                u.setUserId((String) l.get(0));
+                u.setPassword((String) l.get(1));
+                u.setUserName((String) l.get(2));
+                u.setSex((String) l.get(3));
+                u.setLogMode((String) l.get(4));
+                u.setMobile((String) l.get(5));
+                u.setDepartment((String) l.get(6));
+                u.setMajor((String) l.get(7));
+                u.setClass_((String) l.get(8));
+                u.setRfid((String) l.get(9));
+                u.setStatus((String) l.get(10));
+                
+                String d=(String)l.get(11);
+                
+                
+                if("".equals(d)){
+                	u.setCreateDate(null);
+                }else{
+                	
+                SimpleDateFormat sdf =   new SimpleDateFormat("yyyy-MM-dd");
+                Date date= sdf.parse(d.substring(0, d.lastIndexOf(".")));
+                u.setCreateDate(date);
+                }
+                u.setCreateBy((String) l.get(12));
+                u.setGroupId((String) l.get(13));
+               
+                lists.add(u);
+                
+            }
+            book.close();
+            return lists;
+        
+    }
+	
+	
+public static List<ClassSchedule> readExcel2(String path) throws Exception {
+        
+       List<ClassSchedule> css=new ArrayList<ClassSchedule>();
+            Workbook book = Workbook.getWorkbook(new File(path));
+            // 获得第一个工作表对象
+            Sheet sheet = book.getSheet(0);
+            // 得到第一列第一行的单元格
+            int columnum = sheet.getColumns();// 得到列数
+            int rownum = sheet.getRows();// 得到行数
+           System.out.println(rownum);
+            for (int i =1 ; i < rownum; i++)// 循环进行读写
+            {	
+            	List l=new ArrayList();
+                for (int j = 0; j < columnum; j++) {
+                    Cell cell1 = sheet.getCell(j, i);
+                    String result = cell1.getContents();
+                   l.add(result);
+                 }
+                ClassSchedule c=new ClassSchedule();
+                if(l.get(1)==""){
+                	break;
+                }
+                
+                c.setLabId((String) l.get(0));
+                SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd");
+                System.out.println(l.get(1));
+                c.setBeginDate(sdf.parse((String) l.get(1)));
+               if(l.get(2).equals("")){
+            	   c.setEndDate(null);
+               }else{
+            	   c.setEndDate((sdf.parse((String) l.get(2)))); 
+               }
+                c.setIsRepetitive((String) l.get(3));
+                c.setCycleType((String) l.get(4));
+                c.setCycle((String) l.get(5));
+                c.setClasshourId(Integer.parseInt((String) l.get(6)));
+                c.setCoursesName((String) l.get(7));
+                c.setTeacher((String) l.get(8));
+                c.setUseType((String) l.get(9));
+                c.setStatus((String) l.get(10));
+                if("".equals(l.get(11))){
+                	c.setCreateDate(null);
+                }else{
+                c.setCreateDate(sdf.parse((String) l.get(11)));
+                }
+                c.setCreateBy((String) l.get(12));
+                c.setMajor((String) l.get(13));
+                c.setClass_((String) l.get(14));
+                c.setUserId((String) l.get(15));
+                css.add(c);
+            }
+            book.close();
+            
+           
+         	 
+         	 
+            
+            return css;
+    }
+	
+	
+	
+	
+	
+	
+	}

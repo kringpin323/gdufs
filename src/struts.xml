@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.devMode" value="true"></constant>
+	<!-- 配置全局异常结果集,并且定义异常 -->
+	<package name="first" extends="struts-default">
+		<global-results>
+			<result name="exception-error">/error.jsp</result>
+		</global-results>
+
+		<action name="login" class="com.fro.action.LoginAction">
+			<result name="main">/WEB-INF/login/main.jsp</result>
+			<result name="login">/login.jsp</result>
+		</action>
+
+		<action name="sysOut" class="com.fro.action.SystemOutAction">
+			<result name="sysOut">/WEB-INF/jsp/OutSystem.jsp</result>
+		</action>
+
+		<action name="paike" class="com.fro.action.PaiAction">
+			<result name="list">/WEB-INF/jsp/PaiKe.jsp</result>
+			<result name="toPaiKe">/WEB-INF/jsp/csList.jsp</result>
+			<result name="labTable">/WEB-INF/jsp/labTabke.jsp</result>
+			<result name="classManager">/WEB-INF/jsp/ClassManager.jsp</result>
+			<result name="findByCondition">/WEB-INF/jsp/classFindByCon.jsp</result>
+			<result name="toAddClasshour">/WEB-INF/jsp/classhourManager.jsp</result>
+			<result name="preview">/WEB-INF/jsp/classhourList.jsp</result>
+		</action>
+
+		<action name="shebei" class="com.fro.action.SheBeiAction">
+			<result name="list">/WEB-INF/jsp/addSheBei.jsp</result>
+			<result name="mohu">/WEB-INF/jsp/listSheBei.jsp</result>
+			<result name="delete" type="redirect">shebei!addLabinfo.action</result>
+			<result name="update" type="redirect">shebei!addLabinfo.action</result>
+			<result name="addShebei" type="redirect">shebei!addLabinfo.action
+			</result>
+		</action>
+
+		<action name="can" class="com.fro.action.CanAction">
+			<result name="listshiyanshi">/WEB-INF/jsp/CanShu.jsp</result>
+			<result name="mohuchaxun">/WEB-INF/jsp/listCanShu.jsp</result>
+		</action>
+
+	</package>
+
+
+	<include file="systemManger.xml"></include>
+	<include file="lab.xml"></include>
+</struts>    

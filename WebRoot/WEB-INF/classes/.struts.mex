@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="first" location="10,10" size="280,140">
+    <action name="login" location="65,57" size="150,41">
+      <result name="main">
+        <resourceEdge source="main" routing="0" target="main.jsp" />
+      </result>
+      <result name="login">
+        <resourceEdge source="login" routing="0" target="login.jsp" />
+      </result>
+    </action>
+    <action name="sysOut" location="0,0" size="0,0">
+      <result name="sysOut">
+        <resourceEdge source="sysOut" routing="0" target="OutSystem.jsp" />
+      </result>
+    </action>
+    <action name="paike" location="0,0" size="0,0">
+      <result name="list">
+        <resourceEdge source="list" routing="0" target="PaiKe.jsp" />
+      </result>
+      <result name="toPaiKe">
+        <resourceEdge source="toPaiKe" routing="0" target="csList.jsp" />
+      </result>
+      <result name="labTable">
+        <resourceEdge source="labTable" routing="0" target="labTabke.jsp" />
+      </result>
+    </action>
+    <action name="shebei" location="0,0" size="0,0">
+      <result name="list">
+        <resourceEdge source="list" routing="0" target="addSheBei.jsp" />
+      </result>
+      <result name="mohu">
+        <resourceEdge source="mohu" routing="0" target="listSheBei.jsp" />
+      </result>
+    </action>
+    <action name="can" location="0,0" size="0,0">
+      <result name="listshiyanshi">
+        <resourceEdge source="listshiyanshi" routing="0" target="CanShu.jsp" />
+      </result>
+    </action>
+  </package>
+  <webResource name="index.jsp" path="/index.jsp" location="100,205" size="150,55" />
+  <webResource name="general.jsp" path="/WEB-INF/login/general.jsp" location="0,0" size="0,0" />
+  <webResource name="labadmin.jsp" path="/WEB-INF/login/labadmin.jsp" location="0,0" size="0,0" />
+  <webResource name="sysadmin.jsp" path="/WEB-INF/login/sysadmin.jsp" location="0,0" size="0,0" />
+  <webResource name="login.jsp" path="/login.jsp" location="0,0" size="0,0" />
+  <webResource name="OutSystem.jsp" path="/WEB-INF/jsp/OutSystem.jsp" location="0,0" size="0,0" />
+  <webResource name="main.jsp" path="/WEB-INF/login/main.jsp" location="0,0" size="0,0" />
+  <webResource name="PaiKe.jsp" path="/WEB-INF/jsp/PaiKe.jsp" location="0,0" size="0,0" />
+  <webResource name="addSheBei.jsp" path="/WEB-INF/jsp/addSheBei.jsp" location="0,0" size="0,0" />
+  <webResource name="listSheBei.jsp" path="/WEB-INF/jsp/listSheBei.jsp" location="0,0" size="0,0" />
+  <webResource name="CanShu.jsp" path="/WEB-INF/jsp/CanShu.jsp" location="0,0" size="0,0" />
+  <webResource name="csList.jsp" path="/WEB-INF/jsp/csList.jsp" location="0,0" size="0,0" />
+  <webResource name="labTabke.jsp" path="/WEB-INF/jsp/labTabke.jsp" location="0,0" size="0,0" />
+  <include file="systemManger.xml" location="0,0" size="0,0" />
+  <include file="lab.xml" location="0,0" size="0,0" />
+</Struts2Diagram>
+

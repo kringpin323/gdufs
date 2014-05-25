@@ -1,0 +1,43 @@
+body{ margin:auto;font-size:12px;font-family:Verdana;line-height:0; background-color:#EFEFEF;}
+ul,dl,dd,h1,h2,h3,h5,h6,form,p{padding:0;margin:0;}
+ul{list-style:none;}
+img{border:0px;}
+a{color: #2A00FF;text-decoration: none;line-height:2; font-size:12px; margin-left:0px;}
+c{ float:left;color: #F0F0F0;line-height:2; font-size:12px; margin-left:34px;margin-bottom:0px;} 
+a:hover{
+	color: #F00;
+	font-family: Verdana, Geneva, sans-serif;
+}
+strong{color:#2A9FFF;}
+text-align: center; 
+
+/*body*/
+#body { background-image:url(images/ravenna.png);}
+#container { width:1002px; margin:0 auto;margin-bottom:0px;}
+
+/*header*/
+
+
+#banner { height:80px; background-image:url(images/banner.png); margin-bottom:0px;}
+#nav2 { height:32px;background-image:url(images/nav2bg.png); margin-bottom:0px;}
+
+
+
+
+
+/*main*/
+#maincontent { float:left; width:1002px;margin-bottom:0px;margin-bottom:0px;}
+#bg{ float:right; width:772px; height:600px; background-image:url(images/bg.png);margin-bottom:0px; margin-right:0px; margin-top:2px;}
+#text4 {color: #313131; font-size:12px;text-align: center; font-weight:bold; margin-top:12px; }
+
+#text5 {color: #484848; font-size:12px;text-align: left;  margin-top:12px; }
+
+#side { float:left; width:224px; height:400px; background-color: #FFF;margin-bottom:0px; margin-top:-552px;}
+#side2 { float:left; width:224px; height:48px; background-color:#FFF;margin-bottom:0px; margin-bottom:0px; margin-left:0px; margin-top:0px;}
+#body { float:left;  margin-bottom:0px; margin-left:10px; margin-top:6px;}
+#quit { float:right;  margin-bottom:0px; margin-right:6px; margin-top:10px;}
+#exit { float:right;  margin-bottom:0px; margin-right:0px; margin-top:2px;}
+
+
+
+

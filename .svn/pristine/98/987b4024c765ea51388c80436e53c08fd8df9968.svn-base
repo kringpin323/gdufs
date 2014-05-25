@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="third" location="0,0" size="0,0">
+    <action name="lab_*" location="0,0" size="0,0">
+      <result name="lightControl">
+        <resourceEdge source="lightControl" routing="0" target="lightControl.jsp" />
+      </result>
+      <result name="switchControl">
+        <resourceEdge source="switchControl" routing="0" target="switchControl.jsp" />
+      </result>
+      <result name="airConditioner">
+        <resourceEdge source="airConditioner" routing="0" target="airConditioner.jsp" />
+      </result>
+      <result name="doorContorl">
+        <resourceEdge source="doorContorl" routing="0" target="doorContorl.jsp" />
+      </result>
+      <result name="safeControl">
+        <resourceEdge source="safeControl" routing="0" target="safeContorl.jsp" />
+      </result>
+      <result name="spControl">
+        <resourceEdge source="spControl" routing="0" target="spControl.jsp" />
+      </result>
+      <result name="toLabManager">
+        <resourceEdge source="toLabManager" routing="0" target="labManager.jsp" />
+      </result>
+      <result name="preview">
+        <resourceEdge source="preview" routing="0" target="labInfoList.jsp" />
+      </result>
+      <result name="lightList">
+        <resourceEdge source="lightList" routing="0" target="lightList.jsp" />
+      </result>
+      <result name="safeList">
+        <resourceEdge source="safeList" routing="0" target="safeList.jsp" />
+      </result>
+      <result name="doorList">
+        <resourceEdge source="doorList" routing="0" target="doorList.jsp" />
+      </result>
+      <result name="waite">
+        <resourceEdge source="waite" routing="0" target="waite.jsp" />
+      </result>
+      <result name="noRight">
+        <resourceEdge source="noRight" routing="0" target="noRight.jsp" />
+      </result>
+      <result name="toSafeDoor">
+        <resourceEdge source="toSafeDoor" routing="0" target="safeDoorContorl.jsp" />
+      </result>
+      <result name="doorList2">
+        <resourceEdge source="doorList2" routing="0" target="safeDoorList.jsp" />
+      </result>
+      <result name="alarmLists">
+        <resourceEdge source="alarmLists" routing="0" target="BaoJList.jsp" />
+      </result>
+    </action>
+  </package>
+  <webResource name="labStauSet.jsp" path="/WEB-INF/jsp/labStauSet.jsp" location="10,430" size="150,55" />
+  <webResource name="userInfo.jsp" path="/WEB-INF/jsp/userInfo.jsp" location="16,255" size="150,55" />
+  <webResource name="labRecode.jsp" path="/WEB-INF/jsp/labRecode.jsp" location="293,10" size="150,55" />
+  <webResource name="importUserInfo.jsp" path="/WEB-INF/jsp/importUserInfo.jsp" location="593,255" size="150,55" />
+  <webResource name="autoSet.jsp" path="/WEB-INF/jsp/autoSet.jsp" location="299,570" size="150,55" />
+  <webResource name="lightControl.jsp" path="/WEB-INF/jsp/lightControl.jsp" location="0,0" size="0,0" />
+  <webResource name="switchControl.jsp" path="/WEB-INF/jsp/switchControl.jsp" location="0,0" size="0,0" />
+  <webResource name="airConditioner.jsp" path="/WEB-INF/jsp/airConditioner.jsp" location="0,0" size="0,0" />
+  <webResource name="doorContorl.jsp" path="/WEB-INF/jsp/doorContorl.jsp" location="0,0" size="0,0" />
+  <webResource name="safeContorl.jsp" path="/WEB-INF/jsp/safeContorl.jsp" location="0,0" size="0,0" />
+  <webResource name="spControl.jsp" path="/WEB-INF/jsp/spControl.jsp" location="0,0" size="0,0" />
+  <webResource name="labManager.jsp" path="/WEB-INF/jsp/labManager.jsp" location="0,0" size="0,0" />
+  <webResource name="labInfoList.jsp" path="/WEB-INF/jsp/labInfoList.jsp" location="0,0" size="0,0" />
+  <webResource name="lightList.jsp" path="/WEB-INF/jsp/lightList.jsp" location="0,0" size="0,0" />
+  <webResource name="safeList.jsp" path="/WEB-INF/jsp/safeList.jsp" location="0,0" size="0,0" />
+  <webResource name="doorList.jsp" path="/WEB-INF/jsp/doorList.jsp" location="0,0" size="0,0" />
+  <webResource name="waite.jsp" path="/WEB-INF/jsp/waite.jsp" location="0,0" size="0,0" />
+  <webResource name="safeDoorList.jsp" path="/WEB-INF/jsp/safeDoorList.jsp" location="0,0" size="0,0" />
+  <webResource name="safeDoor.jsp" path="/WEB-INF/jsp/safeDoor.jsp" location="0,0" size="0,0" />
+  <webResource name="safeDoorContorl.jsp" path="/WEB-INF/jsp/safeDoorContorl.jsp" location="0,0" size="0,0" />
+  <webResource name="BaoJList.jsp" path="/WEB-INF/jsp/BaoJList.jsp" location="0,0" size="0,0" />
+  <webResource name="noRight.jsp" path="/WEB-INF/jsp/noRight.jsp" location="0,0" size="0,0" />
+</Struts2Diagram>
+

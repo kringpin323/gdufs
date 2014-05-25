@@ -1,0 +1,61 @@
+body{ margin:auto;font-size:12px;font-family:Verdana;line-height:0; background-color:#EFEFEF;}
+ul,dl,dd,h1,h2,h3,h5,h6,form,p{padding:0;margin:0;}
+ul{list-style:none;}
+img{border:0px;}
+a{color: #2A00FF;text-decoration: none;line-height:2; font-size:12px; margin-left:0px;}
+c{ float:left;color: #F0F0F0;line-height:2; font-size:12px; margin-left:34px;margin-bottom:0px;} 
+a:hover{
+	color: #F00;
+	font-family: Verdana, Geneva, sans-serif;
+}
+strong{color:#2A9FFF;}
+text-align: center; 
+
+/*body*/
+#body { background-image:url(images/ravenna.png);}
+#container { width:1002px; margin:0 auto;margin-bottom:0px;}
+/*main*/
+#maincontent { float:left; width:1002px; height:568px;margin-bottom:0px;margin-bottom:0px;}
+#text4 {color: #313131; font-size:12px;text-align: center; font-weight:bold; margin-top:12px; }
+<style type="text/css">
+.AutoNewline
+{
+	word-break: break-all;/*±ØÐë*/
+}
+</style>
+#text5 {color: #484848; font-size:12px;text-align: left;  margin-top:12px; }
+
+#side { float:left; width:224px; height:400px; background-color: #FFF;margin-bottom:0px; margin-top:-568px;}
+#body { float:left;  margin-bottom:0px; margin-left:10px; margin-top:6px;}
+#quit { float:right;  margin-bottom:0px; margin-right:6px; margin-top:10px;}
+#exit { float:right;  margin-bottom:0px; margin-right:0px; margin-top:2px;}
+
+<style type="text/css">
+body{margin:0px;padding:0px; margin-top:4px;}
+body,h2,div,span,li{font-size:12px;}
+
+h2{ text-align: left; margin:0px;padding:0px;line-height:30px;margin-top:1px;}
+.title01{ color:#225271;font-weight:bold; font-size:12px; float:left; margin-left:0px;width:224px;height:30px; background-image:url(images/tittle1.png);margin-top:1px; }
+.title02{ color:#FFF;font-weight:bold; font-size:12px; float:left; margin-left:0px;width:224px;height:30px; background-image:url(images/tittle2.png);margin-top:1px; }
+.content{ 
+text-align:left;
+border-bottom:0px ;
+overflow:hidden;
+padding-left:40px;
+
+background-image:url(images/textbg.png);
+float:left; 
+margin-left:0px;
+line-height:18px; 
+font-family:"ËÎÌå"; 
+width:224px;
+height:1px;
+display:block;}
+.content a:link,	 
+.content a:visited{color: #000;text-decoration: none;}
+.content a:hover{color: #F00;}
+.content a:now {color: #F00;}
+
+</style>
+
+

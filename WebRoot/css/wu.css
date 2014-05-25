@@ -1,0 +1,53 @@
+.unnamed1 {
+	font-size: 14px;
+	line-height: 20px;
+	text-decoration: none;
+}a:visited {
+	font-size: 14px;
+	line-height: 20px;
+	color: #3366FF;
+	text-decoration: none;
+}
+a:hover {
+	font-size: 14px;
+	line-height: 20px;
+	color: #CC0000;
+	text-decoration: underline;
+}
+a:link {
+	font-size: 14px;
+	line-height: 20px;
+	color: #0033CC;
+	text-decoration: none;
+}
+
+
+body {
+	background-color:#D3E3F5;
+	font-size: 14px;
+	line-height: 20px;
+	color: #000000;
+	text-decoration: none;
+}
+td {
+	font-size: 14px;
+	line-height: 20px;
+	text-decoration: none;
+}
+
+th {
+	font-size: 14px;
+	line-height: 20px;
+	text-decoration: normal;
+}
+.title{
+	font-size: 14px;
+	color: FE6400;
+	font-weight: normal;
+
+}
+.time {
+	font-size: 14px;
+	color: #666666;
+}
+

@@ -1,0 +1,28 @@
+body { margin:0 auto; font-size:12px; font-family:Verdana; line-height:1.5;}
+ul,dl,dd,h1,h2,h3,h4,h5,h6,form,p { padding:0; margin:0;}
+ul { list-style:none;}
+img { border:0px;}
+a { color:#05a; text-decoration:none;}
+a:hover { color:#f00;}
+#container { width:1002px; margin:0 auto; background-position:center;}
+
+/*body*/
+#container { width:1002px; margin:0 auto;}
+
+/*main*/
+#maincontent { margin-bottom:0px; background-position:center;}
+
+#main { float:right;  background:#FFCC99;}
+
+
+#button1 { margin-top:-266px; margin-left:694px; }
+#button2 { margin-top:6px; margin-left:694px; }
+#button3 { margin-top:6px; margin-left:694px; }
+
+
+
+
+
+
+
+

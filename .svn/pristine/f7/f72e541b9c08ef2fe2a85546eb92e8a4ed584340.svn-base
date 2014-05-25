@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+ <!-- 首页 -->
+  <welcome-file-list>
+    <welcome-file>login.jsp</welcome-file>
+  </welcome-file-list>
+ <!-- 全局参数 --> 
+  <context-param>  
+       <param-name>IP</param-name>  
+       <param-value>192.168.0.15:8080</param-value>  
+    </context-param>
+  
+    <context-param>  <!-- 每页宣示的记录数 -->
+       <param-name>pageSize</param-name>  
+       <param-value>10</param-value>  
+    </context-param>
+    
+     <context-param>  <!-- 需要宣示的周的记录数 -->
+       <param-name>weeks</param-name>  
+       <param-value>30</param-value>  
+    </context-param>
+    
+    <context-param>  <!-- 每个学期开学时间，用来计算第几周课表 -->
+       <param-name>startDate</param-name>  
+       <param-value>2013-09-01</param-value>  
+    </context-param>
+    
+    
+  <!-- 字符格式过滤器 -->
+    <filter>  
+    <filter-name>CharacterEncoding</filter-name>  
+    <filter-class>com.fro.filter.CharacterEncodingFilter</filter-class>  
+    <init-param>  
+        <param-name>encoding</param-name>  
+        <param-value>utf-8</param-value>  
+    </init-param>  
+</filter>  
+<filter-mapping>  
+    <filter-name>CharacterEncoding</filter-name>  
+    <url-pattern>/*</url-pattern>  
+</filter-mapping>  
+  
+    <!-- session防止 -->
+  <filter>  
+    <filter-name>RightFilter</filter-name>  
+    <filter-class>com.fro.filter.RightFilter</filter-class>  
+</filter>   
+<filter-mapping>  
+    <filter-name>RightFilter</filter-name>  
+    <url-pattern>*.action</url-pattern>  
+</filter-mapping> 
+  
+  
+  
+  <filter>
+  	<filter-name>struts2</filter-name>
+  	<filter-class>
+  		org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter
+  	</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>struts2</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  
+ 
+  
+  
+  
+  <listener>
+  	<listener-class>com.fro.filter.ContextListener</listener-class>
+  </listener>
+  
+   <jsp-config>
+            <taglib>
+                <taglib-uri>http://jpager.com/taglibs/page</taglib-uri>
+                <taglib-location>/WEB-INF/jpager.tld</taglib-location>
+            </taglib>             
+   </jsp-config>
+
+  </web-app>
+
+
+  
+  

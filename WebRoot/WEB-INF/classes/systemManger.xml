@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+		<package name="sencod" extends="first">
+		<action name="systemManger_*" class="com.fro.action.SystemMangerAction" method="{1}">
+		<result name="toLabStauSet">/WEB-INF/jsp/labStauSet.jsp</result>
+		<result name="toUserInfo">/WEB-INF/jsp/userInfo.jsp</result>
+		<result name="toLabRecode">/WEB-INF/jsp/labRecode.jsp</result>
+		<result name="toImportUserInfo">/WEB-INF/jsp/importUserInfo.jsp</result>
+		<result name="importUserInfo" type="chain">systemManger_toImportUserInfo</result>
+		<result name="toAutoSet">/WEB-INF/jsp/autoSet.jsp</result>
+		<result name="toRightSet">/WEB-INF/jsp/toRightSet.jsp</result>
+		<result name="toGroupRightSet">/WEB-INF/jsp/toGroupRightSet.jsp</result>
+		<result name="RightSet" type="chain">systemManger_toUserInfo</result>
+		<result name="findByCondition">/WEB-INF/jsp/findByCon.jsp</result>
+		<result name="UserGroup">/WEB-INF/jsp/userGroupManager.jsp</result>
+		<result name="RightSet2" type="chain">systemManger_UserGroup</result>
+		<result name="preview">/WEB-INF/jsp/groupInfoList.jsp</result>
+		<result name="groupUserList">/WEB-INF/jsp/groupList.jsp</result>
+		<result name="toModiyGroup">/WEB-INF/jsp/toModiyGroup.jsp</result>
+		<result name="exception">/error.jsp</result>
+		<result name="labRight">/WEB-INF/jsp/lanRightSet.jsp</result>
+		</action>
+			
+			
+		</package>
+
+		
+</struts>    
