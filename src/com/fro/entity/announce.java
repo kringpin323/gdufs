@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 //import java.util.List;
 
 public class announce implements java.io.Serializable{
-	
+	// 2014/5/25
 	private String announce_id;
 	private String context;
 	private String author;
