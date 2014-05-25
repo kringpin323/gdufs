@@ -15,12 +15,12 @@
   </head>
   
   <body>
-  <form>
+  <form action="announce!addAnnounce" method="post" id="formA">
     <table id="msg">
       <tr><th colspan="2"><p>发布通知</p></th></tr>
       <tr>
       	<td style="text-align:right; padding-left:30px;">标题：</td>
-      	<td style="width:90%;"><input id="msg_title" type="text" /></td>
+      	<td style="width:90%;"><input id="msg_title" type="text" name="announces.headline"/></td>
       </tr>
       <tr>
         <td style="text-align:right; padding-left:30px;">内容：</td>
@@ -37,7 +37,7 @@
 					height : 330
 				});</script></div></td>
       </tr>
-      <tr><td colspan="2" style="text-align:right; padding-right:50px;"><input type="submit" value="提交"/></td></tr>
+      <tr><td colspan="2" style="text-align:right; padding-right:50px;"><input type="submit" value="提交"/ name="announces.context"></td></tr>
     </table>
     </form>
   </body>

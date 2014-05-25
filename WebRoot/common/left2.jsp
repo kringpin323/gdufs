@@ -376,19 +376,19 @@ a:now {
 
 			<s:iterator value="#session.rightids" status="status">
 				<s:if test="#session.rightids[#status.index]=='sys01'">
-					<a href="lab_toSafeDoor" target="right">新增通告</a>
+					<a href="announce!toAddAnnounce.action" target="right">新增通告</a>
 				</s:if>
 			</s:iterator>
 
 			<s:iterator value="#session.rightids" status="status">
 				<s:if test="#session.rightids[#status.index]=='sys01'">
-					<a href="lab_toSafeDoor" target="right">查看通告</a>
+					<a href="announce!toCheckAnnounce.action" target="right">查看通告</a>
 				</s:if>
 			</s:iterator>
 
 			<s:iterator value="#session.rightids" status="status">
 				<s:if test="#session.rightids[#status.index]=='sys01'">
-					<a href="lab_toSafeDoor" target="right">删除通告</a>
+					<a href="announce!toDelAnnounce.action" target="right">删除通告</a>
 				</s:if>
 			</s:iterator>
 
