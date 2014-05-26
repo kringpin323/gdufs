@@ -79,10 +79,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<li><a href="javascript:chg('waite.html','ifrm1')"><span>Quanta技术中心</span>
 					</a>
 					</li>
-					<li><a href="javascript:chg('waite.html','ifrm1')"><span>&nbsp;&nbsp;&nbsp;最新公告</span>
+					<li><a href="javascript:chg('msg_list.html','ifrm1')"><span>&nbsp;&nbsp;&nbsp;最新公告</span>
 					</a>
 					</li>
-					<li><a href="javascript:chg('waite.html','ifrm1')"><span>&nbsp;&nbsp;&nbsp;关于我们</span>
+					<li><a href="javascript:chg('msg_detail.html','ifrm1')"><span>&nbsp;&nbsp;&nbsp;关于我们</span>
 					</a>
 					</li>
 				</ul>

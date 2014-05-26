@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
+
 
 public class ComputeWeek {
 
@@ -73,7 +73,7 @@ public class ComputeWeek {
     	* @return 添加后的日期 
     	* @throws ParseException 
     	*/ 
-    	public static Date addDate(Date d,long day) throws ParseException { 
+    	public static Date addDate(Date d,long day)  { 
 
     	long time = d.getTime(); 
     	day = day*24*60*60*1000; 

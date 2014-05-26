@@ -18,7 +18,7 @@
 		<property name="format_sql">true</property>
 
 
-
+		<mapping resource="com/fro/entity/Announce.hbm.xml" />
 		<mapping resource="com/fro/entity/UserInfo.hbm.xml" />
 		<mapping resource="com/fro/entity/UserRight.hbm.xml" />
 		<mapping resource="com/fro/entity/ClasshourInfo.hbm.xml" />

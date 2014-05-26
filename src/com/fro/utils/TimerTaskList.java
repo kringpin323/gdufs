@@ -14,7 +14,7 @@ import org.hibernate.Session;
 
 import com.fro.dao.LabDao;
 import com.fro.dao.impl.LabDaoImpl;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
+
 
 public class TimerTaskList extends Thread{
 	public List<Timer> timer;
@@ -69,7 +69,7 @@ public class TimerTaskList extends Thread{
 			
 	
 	
-	public void getwork(ArrayList<LabParameter> labP) throws ParseException
+	public void getwork(ArrayList<LabParameter> labP)
 	{
 		timer = new ArrayList<Timer>();
 		for(LabParameter lap : labP){
