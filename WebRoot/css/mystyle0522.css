@@ -49,10 +49,13 @@ textarea{
 }
 #msg-list-border ul li p{
 	margin-bottom: 5px;
+	_margin-bottom: 0;
 }
 #msg-list-border .msg-list-date{
 	display: block;
 	float: right;
+	_display: inline;
+	_float: none;
 }
 
 #msg-list-border a{color:black;}
@@ -60,6 +63,9 @@ textarea{
 
 #msg-list-border li span:nth-child(1){
 	display: inline-block;
+	width: 80%;
+}
+.first-span-forie{
 	width: 80%;
 }
 
@@ -76,6 +82,18 @@ input#msg-list-jump{
 	text-align: center;
 	font-size: 21px;
 	font-weight: bold;
+}
+#msg-detail-content{
+	margin-top: 30px;
+}
+#msg-detail-jump{
+	text-align: left; 
+	width: auto; 
+	margin-top: 30px; 
+	margin-left: 5px;
+	line-height: 25px; 
+	font-family:宋体；;
+	font-size: 14px;
 }
 
 body>#wrap{
