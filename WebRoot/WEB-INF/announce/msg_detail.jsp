@@ -13,8 +13,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta http-equiv="description" content="this is my page">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     
-    <link href="css/reset.css" rel="stylesheet" type="text/css" />
-    <link href="css/mystyle0522.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/mystyle0522.css" rel="stylesheet" type="text/css" />
     
     <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
 
