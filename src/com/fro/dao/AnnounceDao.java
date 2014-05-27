@@ -1,9 +1,8 @@
 package com.fro.dao;
 
 
-import com.fro.entity.announce;
+import com.fro.entity.Announce;
 import com.fro.utils.HibernateUtils;
-//import com.fro.utils.HibernateUtils;
 import com.fro.exception.ForeginSchooleException;
 
 import java.util.List;
@@ -14,7 +13,10 @@ import com.fro.dao.AnnounceDao;
 
 public interface AnnounceDao {
 	
-	public boolean addAnnounce(announce announces) throws Exception;
+	public boolean addAnnounce(Announce announces) throws Exception;
+	
+	public Announce checkAnnounce(String announce_id) throws Exception;
+	
 
 	
 }

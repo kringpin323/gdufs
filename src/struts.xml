@@ -2,24 +2,29 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	<constant name="struts.devMode" value="true"></constant>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
 	<!-- 配置全局异常结果集,并且定义异常 -->
+	
+
 	<package name="first" extends="struts-default">
 		<global-results>
 			<result name="exception-error">/error.jsp</result>
 		</global-results>
 
-		<action name="login" class="com.fro.action.LoginAction">
+		<action name="login" class="com.fro.action.LoginAction" >
 			<result name="main">/WEB-INF/login/main.jsp</result>
 			<result name="login">/login.jsp</result>
 		</action>
-		
-		<action name="announce" class="com.fro.action.AnnounceAction">
-			<result name="delAnnounce">/WEB-INF/login/main.jsp</result>
-			<result name="checkAnnounce">/login.jsp</result>
-			<result name="addAnnounce">/WEB-INF/jsp/waite.jsp</result>
+
+		<action name="announce*" class="com.fro.action.AnnounceAction" method="{1}">
+			<result name="toDelAnnounce">/WEB-INF/login/main.jsp</result>
+			<result name="toCheckAnnounce">/login.jsp</result>
+			<result name="toAddAnnounce">/WEB-INF/jsp/waite.jsp</result>
 			<result name="addSuccess">/WEB-INF/jsp/waite.jsp</result>
 			<result name="addFail">/WEB-INF/jsp/waite.jsp</result>
-		</action>
+			<result name="SUCCESS">WEB-INF/announce/msg_detail.jsp</result>
+			<result name="NULL">/error.jsp</result>
+			</action>
 
 		<action name="sysOut" class="com.fro.action.SystemOutAction">
 			<result name="sysOut">/WEB-INF/jsp/OutSystem.jsp</result>
@@ -51,6 +56,10 @@
 
 	</package>
 
+	<!-- <package name="default" namespace="/" extends="first">
+		
+	</package>
+ -->
 
 	<include file="systemManger.xml"></include>
 	<include file="lab.xml"></include>

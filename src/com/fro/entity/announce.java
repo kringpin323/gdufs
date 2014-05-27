@@ -1,21 +1,21 @@
 package com.fro.entity;
 
-import java.sql.Timestamp;
+//import java.sql.String;
 //import java.util.List;
 
-public class announce implements java.io.Serializable{
+public class Announce implements java.io.Serializable{
 	// 2014/5/25
 	private String announce_id;
 	private String context;
 	private String author;
-	private Timestamp time;
+	private String time;
 	private String headline;
 	
-	public announce(){
+	public Announce(){
 		
 	}
 	
-	public announce(String announce_id, String context, String author , Timestamp time, 
+	public Announce(String announce_id, String context, String author , String time, 
 			String headline){
 		super();
 		this.announce_id = announce_id;
@@ -25,11 +25,11 @@ public class announce implements java.io.Serializable{
 		this.time = time;
 	}
 
-	public String getAnnonce_id() {
+	public String getAnnounce_id() {
 		return announce_id;
 	}
 
-	public void setAnnonce_id(String announce_id) {
+	public void setAnnounce_id(String announce_id) {
 		this.announce_id = announce_id;
 	}
 
@@ -49,11 +49,11 @@ public class announce implements java.io.Serializable{
 		this.author = author;
 	}
 
-	public Timestamp getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(Timestamp time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 
