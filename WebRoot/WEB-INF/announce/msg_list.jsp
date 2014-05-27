@@ -5,33 +5,8 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <html>
-20:32:13
-羽东 2014/5/27 20:32:13
  <script type="text/javascript" src="js/jquery-1.4.min.js"></script> 
- <script type="text/javascript">
-    function fun()
-{
-	var announce_id = $('#announce_id').val();
-	$.post(
-		'announcecheckAnnounce',
-		{
-			'announce_id':announce_id
-		},
-				function(msg)
-				{
-				if(msg==1)
-				{
-					alert("发布成功!");
-						CKEDITOR.instances.ckeditor.setData("");
-						$('#headline').val("");
-						$('#department').val("");
-				}
-				else
-					alert(msg);
-		}
-	);
-}
- </script>
+ 
 
   <head>
   	<base href="<%=basePath%>">
@@ -55,14 +30,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<li>
     			<p>
     				<span class="first-span-forie">
-    				<s:form action="announcecheckAnnounce" method="post">
+    				
     				<s:url action="announcecheckAnnounce" var="url">
-    					<input type="hidden" id=><s:param name="announce_id" value="AnnounceList[0].announce_id" /></input>
+    					<s:param name="announce_id" value="AnnounceList[0].announce_id"></s:param>
     				</s:url>
     				<s:a href="%{url}">
     				<s:property value="AnnounceList[0].headline" /></s:a> </span>
     				<span class="msg-list-date"><s:property value="AnnounceList[0].time"/></span>
-    				</s:form>
     			</p>
     			<hr /> 
     		</li>
