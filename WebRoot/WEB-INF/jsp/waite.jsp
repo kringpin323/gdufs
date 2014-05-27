@@ -7,6 +7,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
+20:32:13
+羽东 2014/5/27 20:32:13
+ <script type="text/javascript" src="js/jquery-1.4.min.js"></script> 
+ <script type="text/javascript">
+    function fun()
+{
+	var headline = $('#headline').val();
+	var department=$('#department').val();
+	var context = CKEDITOR.instances.ckeditor.getData();
+	$.post(
+		'announce!addAnnounce',
+		{
+			'announce.headline':headline,
+			'announce.context':context,
+			'announce.department':department
+		},
+				function(msg)
+				{
+				if(msg==1)
+				{
+					alert("发布成功!");
+						CKEDITOR.instances.ckeditor.setData("");
+						$('#headline').val("");
+						$('#department').val("");
+				}
+				else
+					alert(msg);
+		}
+	);
+}
+ </script>
+
   <head>
     <title>waite.html</title>
     <script src="ckeditor/ckeditor.js"></script>

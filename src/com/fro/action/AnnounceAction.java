@@ -1,16 +1,28 @@
 package com.fro.action;
 
 import com.fro.entity.Announce;
+import java.util.List;
 //import java.io.PrintWriter;
 import com.fro.service.impl.AnnounceServiceImpl;
 import com.fro.service.AnnounceService;
 import java.sql.Timestamp;
 import java.util.Date;
 
-public class AnnounceAction extends BaseAction{
 
+public class AnnounceAction extends BaseAction{
+	private String announce_id;
 	private Announce announces;
+	private List<Announce> AnnounceList;
 	private AnnounceService announceServiceImpl = new AnnounceServiceImpl();
+	
+	public List<Announce> getAnnounceList()
+	{
+		return AnnounceList;
+	}
+	
+	public void setAnnounceList(List<Announce> AnnounceList){
+		this.AnnounceList = AnnounceList;
+	}
 	
 	public Announce getAnnounces()
 	{
@@ -29,23 +41,33 @@ public class AnnounceAction extends BaseAction{
 		return "toDelAnnounce";
 	}
 	
-	public String toCheckAnnounce(){
-		return "toCheckAnnounce";
+	public String readAnnounce(){
+		
+		AnnounceList = announceServiceImpl.readAnnounce();
+		if(AnnounceList == null){
+			System.out.println("AnnounceList == null");
+		}else{
+			session.put("AnnounceList", AnnounceList);
+			System.out.println("非空，只是页面标签读取错误");
+		}
+		
+		return "readAnnounce";
 	}
 	
 	public String checkAnnounce(){
 		
+		
 		response.setContentType("text/html;charset=utf-8");
 		response.setCharacterEncoding("utf-8");
 		
-		System.out.println("AnnounceAction.checkAnnounce('1')");
-		announces = announceServiceImpl.checkAnnounce("1");
+		System.out.println("AnnounceAction.checkAnnounce('announce_id')");
+		announces = announceServiceImpl.checkAnnounce(announce_id);
 		System.out.println("AnnounceAction.checkAnnounce.finish!");
 		
 		if(announces != null)
-			return "SUCCESS";
+			return "checkSuccess";
 		else
-			return "NULL";
+			return "checkNull";
 		
 	}
 	

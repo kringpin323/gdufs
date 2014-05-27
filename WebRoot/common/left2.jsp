@@ -382,7 +382,7 @@ a:now {
 
 			<s:iterator value="#session.rightids" status="status">
 				<s:if test="#session.rightids[#status.index]=='sys01'">
-					<a href="announcecheckAnnounce" target="right">查看通告</a>
+					<a href="announcereadAnnounce" target="right">查看通告</a>
 				</s:if>
 			</s:iterator>
 

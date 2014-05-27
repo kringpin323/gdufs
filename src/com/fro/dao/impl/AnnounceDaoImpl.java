@@ -10,7 +10,33 @@ import com.fro.dao.AnnounceDao;
 import java.util.List;
 
 public class AnnounceDaoImpl implements AnnounceDao{
-
+	
+	public List<Announce> readAnnounce() throws Exception{
+		try{
+			return readAnnounce(1);
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("List<Announce> readAnnounce(): “Ï≥£");
+		}
+		return null;
+	}
+	
+	public List<Announce> readAnnounce(int page) throws Exception{
+		try{
+			int pageCount=5;
+			String hql = "from Announce";
+			Session session = HibernateUtils.getSession();
+			Query q = session.createQuery(hql);
+			q.setFirstResult((page-1)*pageCount+1);
+			q.setMaxResults(page*pageCount);
+			List<Announce> tempAnn = q.list();
+			return tempAnn;
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("List<Announce> readAnnounce(int page): “Ï≥£");
+		}
+		return null;
+	}
 	public boolean addAnnounce(Announce announces) throws Exception{
 		try{
 			Session session = HibernateUtils.getSession();

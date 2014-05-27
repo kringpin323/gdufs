@@ -5,6 +5,34 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <html>
+20:32:13
+羽东 2014/5/27 20:32:13
+ <script type="text/javascript" src="js/jquery-1.4.min.js"></script> 
+ <script type="text/javascript">
+    function fun()
+{
+	var announce_id = $('#announce_id').val();
+	$.post(
+		'announcecheckAnnounce',
+		{
+			'announce_id':announce_id
+		},
+				function(msg)
+				{
+				if(msg==1)
+				{
+					alert("发布成功!");
+						CKEDITOR.instances.ckeditor.setData("");
+						$('#headline').val("");
+						$('#department').val("");
+				}
+				else
+					alert(msg);
+		}
+	);
+}
+ </script>
+
   <head>
   	<base href="<%=basePath%>">
     <title>msg_List.html</title>
@@ -21,23 +49,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  	<p id="index-quote">通知列表</p>
+  	<p id="index-quote">通知列表	</p>
     <div id="msg-list-border">
     	<ul>
     		<li>
     			<p>
-    				<span class="first-span-forie"><a href="#">我校论文获省高校党建研究会征文一等奖我校论文获省高校党建研究会征文一等奖我校论文获省高校党建研究会征文一等奖我校论文获省高校党建研究会征文一等奖我校论文获省高校党建研究会征文一等奖</a> </span>
-    				<span class="msg-list-date">2014-05-24</span>
+    				<span class="first-span-forie">
+    				<s:form action="announcecheckAnnounce" method="post">
+    				<s:url action="announcecheckAnnounce" var="url">
+    					<input type="hidden" id=><s:param name="announce_id" value="AnnounceList[0].announce_id" /></input>
+    				</s:url>
+    				<s:a href="%{url}">
+    				<s:property value="AnnounceList[0].headline" /></s:a> </span>
+    				<span class="msg-list-date"><s:property value="AnnounceList[0].time"/></span>
+    				</s:form>
     			</p>
     			<hr /> 
     		</li>
-    		<li><p><span class="first-span-forie">我校论文获省高校党建研究会征文一等奖</span> <span class="msg-list-date">2014-05-24</span></p><hr /> </li>
-    		<li><p><span class="first-span-forie">我校论文获省高校党建研究会征文一等奖</span> <span class="msg-list-date">2014-05-24</span></p><p><hr /> </li>
-    		<li><p><span class="first-span-forie">我校论文获省高校党建研究会征文一等奖</span> <span class="msg-list-date">2014-05-24</span></p><p><hr /> </li>
-    		<li><p><span class="first-span-forie">我校论文获省高校党建研究会征文一等奖</span> <span class="msg-list-date">2014-05-24</span></p><p><hr /> </li>
-    		<li><p><span class="first-span-forie">我校论文获省高校党建研究会征文一等奖</span> <span class="msg-list-date">2014-05-24</span></p><p><hr /> </li>
-    		<li><p><span class="first-span-forie">我校论文获省高校党建研究会征文一等奖</span> <span class="msg-list-date">2014-05-24</span></p><p><hr /> </li>
-    		<li><p><span class="first-span-forie">我校论文获省高校党建研究会征文一等奖</span> <span class="msg-list-date">2014-05-24</span></p><p><hr /> </li>
+    		<li><p><span class="first-span-forie"><s:property value="AnnounceList[1].headline"/></span> <span class="msg-list-date"><s:property value="AnnounceList[1].time"/></span></p><hr /> </li>
+    		<li><p><span class="first-span-forie"><s:property value="AnnounceList[2].headline"/></span> <span class="msg-list-date"><s:property value="AnnounceList[2].time"/></span></p><hr /> </li>
+    		<li><p><span class="first-span-forie"><s:property value="AnnounceList[3].headline"/></span> <span class="msg-list-date"><s:property value="AnnounceList[3].time"/></span></p><hr /> </li>
+    		<li><p><span class="first-span-forie"><s:property value="AnnounceList[4].headline"/></span> <span class="msg-list-date"><s:property value="AnnounceList[4].time"/></span></p><hr /> </li>
+    		
     	</ul>
     	
     	<p id="msg-list-bottom">
