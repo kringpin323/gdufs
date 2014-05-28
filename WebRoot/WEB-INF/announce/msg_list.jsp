@@ -5,33 +5,8 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <html>
-20:32:13
-羽东 2014/5/27 20:32:13
  <script type="text/javascript" src="js/jquery-1.4.min.js"></script> 
- <script type="text/javascript">
-    function fun()
-{
-	var announce_id = $('#announce_id').val();
-	$.post(
-		'announcecheckAnnounce',
-		{
-			'announce_id':announce_id
-		},
-				function(msg)
-				{
-				if(msg==1)
-				{
-					alert("发布成功!");
-						CKEDITOR.instances.ckeditor.setData("");
-						$('#headline').val("");
-						$('#department').val("");
-				}
-				else
-					alert(msg);
-		}
-	);
-}
- </script>
+ 
 
   <head>
   	<base href="<%=basePath%>">
@@ -41,8 +16,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta http-equiv="description" content="this is my page">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     
-    <link href="../../css/reset.css" rel="stylesheet" type="text/css" />
-    <link href="../../css/mystyle0522.css" rel="stylesheet" type="text/css" />
+    <link href="./css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="./css/mystyle0522.css" rel="stylesheet" type="text/css" />
     
     <link rel="stylesheet" type="text/css" href="./styles.css">
 
@@ -54,14 +29,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<ul>
     		<li>
     			<p>
+    			<s:form>
+    				<a href="announcecheckAnnounce?announce_id=<s:property value="AnnounceList[1].announce_id" />">
+    				<s:property value="AnnounceList[0].headline" /></span> 
+    				</a>
     				<span class="first-span-forie">
-    				<s:form action="announcecheckAnnounce" method="post">
-    				<s:url action="announcecheckAnnounce" var="url">
-    					<input type="hidden" id=><s:param name="announce_id" value="AnnounceList[0].announce_id" /></input>
-    				</s:url>
-    				<s:a href="%{url}">
-    				<s:property value="AnnounceList[0].headline" /></s:a> </span>
-    				<span class="msg-list-date"><s:property value="AnnounceList[0].time"/></span>
+    				
+    				<!--  <s:url action="announcecheckAnnounce" var="url">
+    					<s:property value="AnnounceList[0].headline" /></span>
+    					<s:param name="announce_id" value="AnnounceList[0].announce_id"></s:param>
+    				</s:url>-->
+    				
+    				<span class="msg-list-date">dd<s:property value="AnnounceList[0].time"/></span>
     				</s:form>
     			</p>
     			<hr /> 

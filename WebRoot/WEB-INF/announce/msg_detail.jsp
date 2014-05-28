@@ -13,8 +13,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta http-equiv="description" content="this is my page">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     
-    <link href="../../css/reset.css" rel="stylesheet" type="text/css" />
-    <link href="../../css/mystyle0522.css" rel="stylesheet" type="text/css" />
+    <link href="./css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="./css/mystyle0522.css" rel="stylesheet" type="text/css" />
     
     <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
 
@@ -25,8 +25,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div id="msg-detail-border">
     	<div id="msg-detail-top">
     	
-    	<p><s:property value="announces.headline"/></p></div>
-    	<div id="msg-detail-content"><s:property value="announces.context"/></div>
+    	<p><s:property value="announce.headline"/></p></div>
+    	<div id="msg-detail-content"><s:property value="announce.context"/></div>
     	<div id="msg-detail-jump">
     		<p><a href="#">上一条：关于举办首届广外-香港理工多元识读论坛通知</a><p>
     		<p><a href="#">下一条：关于举办首届广外-香港理工多元识读论坛通知增长增长增长增长增长</a></p>

@@ -20,8 +20,6 @@
 			<result name="toDelAnnounce">/WEB-INF/login/main.jsp</result>
 			<result name="readAnnounce">WEB-INF/announce/msg_list.jsp</result>
 			<result name="toAddAnnounce">/WEB-INF/jsp/waite.jsp</result>
-			<result name="addSuccess">/WEB-INF/jsp/waite.jsp</result>
-			<result name="addFail">/WEB-INF/jsp/waite.jsp</result>
 			<result name="checkSuccess">WEB-INF/announce/msg_detail.jsp</result>
 			<result name="checkNull">/error.jsp</result>
 			</action>
