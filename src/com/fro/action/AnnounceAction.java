@@ -35,32 +35,20 @@ public class AnnounceAction extends BaseAction{
 
 	private List<Announce> AnnounceList;
 	private AnnounceService announceServiceImpl = new AnnounceServiceImpl();
-	
+
 	public void setAnnounce_id(String announce_id){
 		this.announce_id = announce_id;
-<<<<<<< HEAD
 	}
-	
+
 	public String getAnnounce_id(){
 		return announce_id;
 	}
-	
-	public List<Announce> getAnnounceList()
-	{
-		return AnnounceList;
-=======
->>>>>>> 807687f9661358d34287787314dd26bbd1557cc3
-	}
-	
-	public String getAnnounce_id(){
-		return announce_id;
-	}
-	
+
 	public List<Announce> getAnnounceList()
 	{
 		return AnnounceList;
 	}
-	
+
 	public void setAnnounceList(List<Announce> AnnounceList){
 		this.AnnounceList = AnnounceList;
 	}
@@ -68,13 +56,13 @@ public class AnnounceAction extends BaseAction{
 	public String toAddAnnounce(){
 		return "toAddAnnounce";
 	}
-	
+
 	public String toDelAnnounce(){
 		return "toDelAnnounce";
 	}
-	
+
 	public String readAnnounce(){
-		
+
 		AnnounceList = announceServiceImpl.readAnnounce();
 		if(AnnounceList == null){
 			System.out.println("AnnounceList == null");
@@ -82,29 +70,29 @@ public class AnnounceAction extends BaseAction{
 			session.put("AnnounceList", AnnounceList);
 			System.out.println("非空，只是页面标签读取错误");
 		}
-		
+
 		return "readAnnounce";
 	}
-	
+
 	public String checkAnnounce(){
-		
-		
+
+
 		response.setContentType("text/html;charset=utf-8");
 		response.setCharacterEncoding("utf-8");
-		
+
 		System.out.println("AnnounceAction.checkAnnounce('announce_id')");
 		announce = announceServiceImpl.checkAnnounce(announce_id);
 		System.out.println("AnnounceAction.checkAnnounce.finish!");
-		
+
 		if(announce != null)
 			return "checkSuccess";
 		else
 			return "checkNull";
-		
+
 	}
-	
+
 public String addAnnounce() throws Exception{
-		
+
 	response.setContentType("text/html;charset=utf-8");
 		response.setCharacterEncoding("utf-8");
 //		PrintWriter out = response.getWriter();
