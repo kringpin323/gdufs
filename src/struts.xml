@@ -18,12 +18,10 @@
 
 		<action name="announce*" class="com.fro.action.AnnounceAction" method="{1}">
 			<result name="toDelAnnounce">/WEB-INF/login/main.jsp</result>
-			<result name="toCheckAnnounce">/login.jsp</result>
+			<result name="readAnnounce">WEB-INF/announce/msg_list.jsp</result>
 			<result name="toAddAnnounce">/WEB-INF/jsp/waite.jsp</result>
-			<result name="addSuccess">/WEB-INF/jsp/waite.jsp</result>
-			<result name="addFail">/WEB-INF/jsp/waite.jsp</result>
-			<result name="SUCCESS">WEB-INF/announce/msg_detail.jsp</result>
-			<result name="NULL">/error.jsp</result>
+			<result name="checkSuccess">WEB-INF/announce/msg_detail.jsp</result>
+			<result name="checkNull">/error.jsp</result>
 			</action>
 
 		<action name="sysOut" class="com.fro.action.SystemOutAction">

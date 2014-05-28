@@ -17,6 +17,9 @@ public interface AnnounceDao {
 	
 	public Announce checkAnnounce(String announce_id) throws Exception;
 	
+	public List<Announce> readAnnounce() throws Exception;
+	
+	public List<Announce> readAnnounce(int page) throws Exception;
 
 	
 }

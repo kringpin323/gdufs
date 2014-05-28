@@ -6,25 +6,25 @@
 -->
 <hibernate-mapping>
     <class name="com.fro.entity.Announce" table="dbo.announce" catalog="gdufs">
-        <id name="announce_id" type="java.lang.String">
+        <id name="announce_id" type="java.lang.Integer">
             <column name="announce_id" length="10" />
-
+			<generator class="native"/>
         </id>
         
-        <property name="time" type="java.lang.String">
-            <column name="time" length="10">
-                <comment>创建时间</comment>
-            </column>
-        </property>
-        <property name="context" type="java.lang.String">
-            <column name="context" length="100">
-                <comment>创建人</comment>
-            </column>
-        </property>
         
+        <property name="context" type="java.lang.String">
+            <column name="context" >
+               <comment>内容</comment>
+            </column>
+        </property>
+        <property name="department" type="java.lang.String">
+            <column name="department" length="30">
+                 <comment>发布单位</comment>
+            </column>
+        </property>
        <property name="author" type="java.lang.String">
-            <column name="author" length="10">
-                
+            <column name="author" length="15">
+                 <comment>创建人</comment>
             </column>
         </property>
 		 
@@ -33,7 +33,6 @@
                
             </column>
         </property>
-        
         
         
     </class>

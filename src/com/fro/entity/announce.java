@@ -1,21 +1,22 @@
 package com.fro.entity;
 
-//import java.sql.String;
+import java.sql.Timestamp;
 //import java.util.List;
 
 public class Announce implements java.io.Serializable{
 	// 2014/5/25
-	private String announce_id;
+	private Integer announce_id;
 	private String context;
 	private String author;
-	private String time;
+	private Timestamp time;
 	private String headline;
-	
+	private String department;
+
 	public Announce(){
 		
 	}
 	
-	public Announce(String announce_id, String context, String author , String time, 
+	public Announce(Integer announce_id, String context, String author , Timestamp time, 
 			String headline){
 		super();
 		this.announce_id = announce_id;
@@ -24,15 +25,14 @@ public class Announce implements java.io.Serializable{
 		this.headline = headline;
 		this.time = time;
 	}
-
-	public String getAnnounce_id() {
+	
+	public Integer getAnnounce_id() {
 		return announce_id;
 	}
 
-	public void setAnnounce_id(String announce_id) {
+	public void setAnnounce_id(Integer announce_id) {
 		this.announce_id = announce_id;
 	}
-
 	public String getContext() {
 		return context;
 	}
@@ -49,11 +49,11 @@ public class Announce implements java.io.Serializable{
 		this.author = author;
 	}
 
-	public String getTime() {
+	public Timestamp getTime() {
 		return time;
 	}
 
-	public void setTime(String time) {
+	public void setTime(Timestamp time) {
 		this.time = time;
 	}
 
@@ -64,6 +64,12 @@ public class Announce implements java.io.Serializable{
 	public void setHeadline(String headline) {
 		this.headline = headline;
 	}
-	
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
 	
 }
